@@ -31,8 +31,12 @@
                             <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
                         </div>
                         <div class="mb-3">
+                            <label for="klas" class="form-label">Klas</label>
+                            <input type="text" name="klas" class="form-control" id="klas" placeholder="SEITO21A" required>
+                        </div>
+                        <div class="mb-3">
                             <input type="radio" name="role" value="admin"> Docent<br>
-                            <input type="radio" name="role" value="user"> Student<br>
+                            <input type="radio" name="role" value="user" checked> Student<br>
                         </div>
                         <div class="mb-3">
                             <div class="d-grid">
