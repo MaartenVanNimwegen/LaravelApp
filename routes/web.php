@@ -7,7 +7,7 @@ use App\Http\Middleware\AdminMiddleware;
 
 
 Route::get('/', function () {
-    return view('about');
+    return view('login');
 });
 
 Route::group(['middleware' => 'guest'], function () {
