@@ -17,6 +17,7 @@ class Les extends Model
     protected $fillable = [
         'naam',
         'info',
+        'klas',
         'start',
         'min',
         'max',

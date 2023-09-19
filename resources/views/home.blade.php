@@ -17,11 +17,24 @@
     </div>
     <div class="col-3">
       <h1>Opkomende lessen:</h1>
-      <ol>
+      <table class="table table-striped">
+        <thead>
+          <th>Naam</th>
+          <th>Klas</th>
+          <th>Datum</th>
+          <th>Aanmeldingen</th>
+        </thead>
+        <tbody>
           @foreach($upcommingLessons as $les)
-              <li>{{ $les->naam }}</li>
+            <tr>
+              <td>{{ $les->naam }}</td>
+              <td>{{ $les->klas }}</td>
+              <td>{{ $les->start }}</td>
+              <td>Todo</td>
+            </tr>
           @endforeach
-      </ol>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

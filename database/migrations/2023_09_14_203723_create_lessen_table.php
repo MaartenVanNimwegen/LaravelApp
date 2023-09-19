@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('naam');
             $table->string('info');
+            $table->string('klas');
             $table->dateTime('start');
             $table->integer('min');
             $table->integer('max');
