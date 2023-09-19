@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Les;
 use Illuminate\Http\Request;
 
-class AddLesController extends Controller
+class LesController extends Controller
 {
     public function addLes()
     {
@@ -26,4 +26,18 @@ class AddLesController extends Controller
 
         return back()->with('success', 'Les added successfully');
     }
-}   
+
+    public function ViewAllComingLessons()
+    { {
+            $allLessons = Les::all();
+            $upcommingLessons = [];
+            $currentDate = date('Y-m-d');
+            foreach ($allLessons as $lesson) {
+                if ($lesson->start > $currentDate) {
+                    $upcommingLessons[] = $lesson;
+                }
+            }
+            return $upcommingLessons;
+        }
+    }
+}

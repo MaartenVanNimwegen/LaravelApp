@@ -10,8 +10,20 @@
 <body>
 @include('navigation')
 
-<div class="container">
-    
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-9">
+
+    </div>
+    <div class="col-3">
+      <h1>Opkomende lessen:</h1>
+      <ol>
+          @foreach($upcommingLessons as $les)
+              <li>{{ $les->naam }}</li>
+          @endforeach
+      </ol>
+    </div>
+  </div>
 </div>
 
 </body>

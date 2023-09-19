@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\addLesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LesController;
 use App\Http\Middleware\AdminMiddleware;
 
 
@@ -24,6 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register');
-    Route::get('/addLes', [AddLesController::class, 'addLes'])->name('index');
-    Route::post('/addLes', [AddLesController::class, 'addLesPost'])->name('addLes');
+    Route::get('/addLes', [LesController::class, 'addLes'])->name('index');
+    Route::post('/addLes', [LesController::class, 'addLesPost'])->name('addLes');
 });
