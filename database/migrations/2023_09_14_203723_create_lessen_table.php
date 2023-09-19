@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lessen', function (Blueprint $table) {
+        Schema::create('les', function (Blueprint $table) {
             $table->id();
             $table->string('naam');
             $table->string('info');
             $table->dateTime('start');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }
