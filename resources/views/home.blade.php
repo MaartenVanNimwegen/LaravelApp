@@ -8,8 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </head>
 <body>
-@include('navigation')
+@extends('layouts.app')
 
+@section('content')
 <div class="container-fluid">
   <div class="row">
     <div class="col-9">
@@ -26,18 +27,19 @@
         </thead>
         <tbody>
           @foreach($upcommingLessons as $les)
-            <tr>
-              <td>{{ $les->naam }}</td>
-              <td>{{ $les->klas }}</td>
-              <td>{{ $les->start }}</td>
-              <td>Todo</td>
-            </tr>
+          <tr>
+            <td>{{ $les->naam }}</td>
+            <td>{{ $les->klas }}</td>
+            <td>{{ $les->start }}</td>
+            <td>Todo</td>
+          </tr>
           @endforeach
         </tbody>
       </table>
     </div>
   </div>
 </div>
+@endsection
 
 </body>
 </html>

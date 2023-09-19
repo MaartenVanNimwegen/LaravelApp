@@ -19,16 +19,20 @@ class UserSeeder extends Seeder
             'name' => 'Frans de Boer',
             'email' => 'fdeboer@rocfriesepoort.nl',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         DB::table('users')->insert([
             'name' => 'Richard Kingma',
             'email' => 'rkingma@rocfriesepoort.nl',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
 
@@ -37,32 +41,54 @@ class UserSeeder extends Seeder
             'name' => 'Maarten van Nimwegen',
             'email' => 'maarten@gmail.com',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);   
         
         DB::table('users')->insert([
             'name' => 'Tim Hammersma',
             'email' => 'tim@gmail.com',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);   
 
         DB::table('users')->insert([
             'name' => 'Kevin Kamstra',
             'email' => 'kevin@gmail.com',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);   
 
         DB::table('users')->insert([
             'name' => 'Christian Koopman',
             'email' => 'christian@gmail.com',
             'password' => '$2y$10$dKgjhq4xiXt1aKZoN/L9IePt4GAzZ2zSSf87DjWmXAo4YdwjzNFde',
-            'password_code' => Hash::make('test'),
+            'password_code' => str::random(),
             'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]); 
+
+        DB::table('users')->insert([
+            'name' => 'Dinand Lieuwes',
+            'email' => 'dinand@gmail.com',
+            'password_code' => str::random(),
+            'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);   
     }
 }
