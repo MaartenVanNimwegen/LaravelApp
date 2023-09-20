@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
 {
@@ -26,6 +24,7 @@ class PasswordController extends Controller
         return view('wachtwoord', compact('code'));
     }
 
+
     public function setPassword(Request $request)
     {
         $request->validate([
@@ -34,18 +33,19 @@ class PasswordController extends Controller
 
         $code = $request->input('code');
 
+        // Retrieve the user with the given code
         $user = User::where('password_code', $code)->first();
 
         if (!$user || !is_null($user->password)) {
-            return redirect()->route('login')->with('error', 'Invalid or expired link.');
+            return redirect()->route('login')->with('error', 'Deze link is ongeldig of verlopen.');
         }
 
+        // Update the user's password
         $user->update([
             'password' => bcrypt($request->input('password')),
             'password_code' => null,
         ]);
 
-        return redirect()->route('login')->with('success', 'Password has been set successfully. You can now log in.');
+        return redirect()->route('login')->with('success', 'Het wachtwoord is succesvol aangemaakt. U kunt nu inloggen.');
     }
-
 }

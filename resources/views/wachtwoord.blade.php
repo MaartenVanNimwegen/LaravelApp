@@ -16,9 +16,9 @@
                 <div class="card-header">{{ __('Kies een wachtwoord') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
                         </div>
                     @endif
 
@@ -34,7 +34,7 @@
                             <label for="password-confirm">Controle wachtwoord</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>
-
+                        <input type="hidden" name="code" value="{{ $code }}">
                         <button type="submit" class="btn btn-primary">
                             {{ __('Opslaan') }}
                         </button>

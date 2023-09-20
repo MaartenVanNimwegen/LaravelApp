@@ -25,6 +25,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('id')->on('Users');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->unique('password_code');
+        });
     }
 
     public function down()
