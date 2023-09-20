@@ -15,15 +15,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="addGroep">Groep aanmaken</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="addLes">Les aanmaken</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="register">Gebruiker toevoegen</a>
-                </li>
+                @auth
+                    @if (auth()->user()->hasRole('admin'))
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="addGroep">Groep aanmaken</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="addLes">Les aanmaken</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="register">Gebruiker toevoegen</a>
+                    </li>
+                    @elseif (auth()->user()->hasRole('student'))
+                    <a class="nav-link active" aria-current="page" href="aanwezig">Aanwezig melden</a>
+                    @endif
+                @endauth
                 </ul>
                 <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
                     @csrf
