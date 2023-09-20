@@ -44,10 +44,10 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credetials)) {
-            return redirect('/home')->with('success', 'Login Success');
+            return redirect('/home')->with('success', 'Login succesvol');
         }
 
-        return back()->with('error', 'Error Email or Password');
+        return back()->with('error', 'De combinatie van het e-mailadres en het wachtwoord is niet bij ons bekend. ');
     }
 
     public function logout()

@@ -18,7 +18,7 @@ class PasswordController extends Controller
 
         // Check if the user exists and if the password is null
         if (!$user || !is_null($user->password)) {
-            return redirect()->route('login')->with('error', 'Invalid or expired link.');
+            return redirect()->route('login')->with('error', 'Deze link is ongeldig of verlopen.');
         }
 
         return view('wachtwoord', compact('code'));
@@ -27,25 +27,24 @@ class PasswordController extends Controller
 
     public function setPassword(Request $request)
     {
-        $request->validate([
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
-
         $code = $request->input('code');
-
-        // Retrieve the user with the given code
+        
         $user = User::where('password_code', $code)->first();
-
+        
         if (!$user || !is_null($user->password)) {
             return redirect()->route('login')->with('error', 'Deze link is ongeldig of verlopen.');
         }
-
-        // Update the user's password
-        $user->update([
-            'password' => bcrypt($request->input('password')),
-            'password_code' => null,
-        ]);
-
-        return redirect()->route('login')->with('success', 'Het wachtwoord is succesvol aangemaakt. U kunt nu inloggen.');
+        
+        if ($request->input('password') === $request->input('password_confirmation')){
+            $user->update([
+                'password' => bcrypt($request->input('password')),
+                'password_code' => null,
+            ]);
+    
+            return redirect()->route('login')->with('success', 'Het wachtwoord is succesvol aangemaakt. U kunt nu inloggen.');
+        }
+        else {
+            return redirect()->back()->with('error', 'De gegeven wachtwoorden komen niet overeen!');
+        }
     }
 }
