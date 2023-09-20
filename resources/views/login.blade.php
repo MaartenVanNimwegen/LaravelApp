@@ -20,6 +20,11 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
+                    @if(Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
