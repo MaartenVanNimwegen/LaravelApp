@@ -19,6 +19,11 @@
               {{ Session::get('success') }}
           </div>
       @endif
+      @if(Session::has('error'))
+          <div class="alert alert-danger" role="alert">
+              {{ Session::get('error') }}
+          </div>
+      @endif
     </div>
     <div class="col-3">
       <h1>Opkomende lessen:</h1>
