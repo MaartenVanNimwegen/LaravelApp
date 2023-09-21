@@ -32,7 +32,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="naam" class="form-label">Naam:</label>
-                            <input type="text" name="naam" class="form-control" id="naam" placeholder="OOP basis" required>
+                            <input type="text" name="naam" class="form-control" id="naam" placeholder="Groepsnaam" required>
                         </div>
                         @foreach ($availableUsers as $user)
                         <div class="form-check">

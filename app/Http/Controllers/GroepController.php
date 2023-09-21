@@ -26,9 +26,12 @@ class GroepController extends Controller
             $query->select('users.id')
                   ->from('users')
                   ->join('groep_user_koppel', 'users.id', '=', 'groep_user_koppel.userId')
-                  ->join('groep', 'groep.id', '=', 'groep_user_koppel.groepId')
-                  ->where('groep.status', 1);
-        })->get();
+                  ->join('groep', 'groep_user_koppel.groepId', '=', 'groep.id')
+                  ->whereColumn('groep_user_koppel.userId', 'users.id')
+                  ->where('groep.status', 0);
+        })
+        ->where('role', '!=', 'admin') // Exclude users with 'admin' role
+        ->get();
         
         return view('createGroup', compact('availableUsers'));
     }
