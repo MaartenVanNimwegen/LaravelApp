@@ -31,7 +31,8 @@ class GroepController extends Controller
                   ->whereColumn('groep_user_koppel.userId', 'users.id')
                   ->where('groep.status', 0);
         })
-        ->where('role', '!=', 'admin') // Exclude users with 'admin' role
+        ->where('role', '!=', 'admin')// Exclude users with 'admin' role
+        ->whereNull('password_code') 
         ->get();
         
         return view('createGroup', compact('availableUsers'));
@@ -80,9 +81,9 @@ class GroepController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Groep $groep)
+    public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -90,7 +91,11 @@ class GroepController extends Controller
      */
     public function update(Request $request, Groep $groep)
     {
-        //
+        
+        $groep = Groep::findOrFail($id);
+        $groep->fill(['status' => '1']);
+
+        return redirect()->route('home')->with('success', 'Group gearchiveerd');
     }
 
     /**
