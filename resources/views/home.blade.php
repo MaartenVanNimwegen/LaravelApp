@@ -13,7 +13,7 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-9">
+		<div class="col-8">
 			@if(Session::has('success'))
 					<div class="alert alert-success" role="alert">
 							{{ Session::get('success') }}
@@ -25,18 +25,17 @@
 					</div>
 			@endif
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			<h1>Opkomende lessen:</h1>
 			<table class="table table-striped">
 				<thead>
 					<th>Naam</th>
 					<th>Klas</th>
 					<th>Datum</th>
-					@auth
-						@if (auth()->user()->hasRole('admin'))
 					<th>Aanmeldingen</th>
-						@elseif (auth()->user()->hasRole('student'))
-						<th>Aanmelden</th>
+					@auth
+						@if (auth()->user()->hasRole('student'))
+							<th>Aanmelden</th>
 						@endif
 					@endauth         
 				</thead>
@@ -49,10 +48,9 @@
 						<td>{{ $les->naam }}</td>
 						<td>{{ $les->klas }}</td>
 						<td>{{ $les->start }}</td>
-						@auth
-							@if (auth()->user()->hasRole('admin'))
 						<td>count</td>
-							@elseif (auth()->user()->hasRole('student'))
+						@auth
+							@if (auth()->user()->hasRole('student'))
 						<td>
 							@if ($aangemeld === false)
 							<form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">

@@ -39,7 +39,7 @@
                         </div>
                         <div class="mb-3">
                             <input type="radio" name="role" value="admin"> Docent<br>
-                            <input type="radio" name="role" value="user" checked> Student<br>
+                            <input type="radio" name="role" value="student" checked> Student<br>
                         </div>
                         <div class="mb-3">
                             <div class="d-grid">
