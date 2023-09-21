@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    public function groups()
+{
+    return $this->belongsToMany(Groep::class, 'groep_user_koppel', 'userId', 'groepId');
+}
 }

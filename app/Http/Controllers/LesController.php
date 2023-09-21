@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Les;
 use App\Models\Les_user_koppel;
 use Illuminate\Http\Request;
@@ -35,18 +36,14 @@ class LesController extends Controller
     }
 
     public function ViewAllComingLessons()
-    { {
-            $allLessons = Les::all();
-            $upcommingLessons = [];
-            $currentDate = date('Y-m-d');
-            foreach ($allLessons as $lesson) {
-                if ($lesson->start > $currentDate) {
-                    $upcommingLessons[] = $lesson;
-                }
-            }
-            return $upcommingLessons;
-        }
-    }
+{
+    $currentDate = Carbon::now();
+
+    $upcomingLessons = Les::whereDate('start', '>', $currentDate)
+        ->get();
+
+    return $upcomingLessons;
+}
 
     public function Aanmelden(Request $request, $id)
     {

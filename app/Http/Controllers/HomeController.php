@@ -1,18 +1,21 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\Les_user_koppel;
 use Illuminate\Http\Request;
 use App\Models\Les;
-
+ 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(LesController $lesController, GroepController $groepController)
     {
-        $lesController = new LesController();
+       $user = auth()->user();
+
         $upcommingLessons = $lesController->ViewAllComingLessons();
-        return view('home', compact('upcommingLessons'));
+        $groups = $groepController->index();
+        $groep = $groepController->show($user->id);
+        return view('home', compact('upcommingLessons', 'groups', 'groep'));
     }
 
     public function isUserAangemeld($lesId)
