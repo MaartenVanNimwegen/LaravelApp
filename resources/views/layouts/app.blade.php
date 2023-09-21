@@ -18,7 +18,7 @@
                 @auth
                     @if (auth()->user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="addGroep">Groep aanmaken</a>
+                        <a class="nav-link active" aria-current="page" href="addGroup">Groep aanmaken</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="addLes">Les aanmaken</a>

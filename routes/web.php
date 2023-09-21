@@ -31,6 +31,6 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register');
     Route::get('/addLes', [LesController::class, 'addLes'])->name('index');
     Route::post('/addLes', [LesController::class, 'addLesPost'])->name('addLes');
+    Route::get('/addGroup', [GroepController::class, 'create'])->name('createGroup');
+    Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
 });
-Route::get('/addGroup', [GroepController::class, 'create'])->name('createGroup');
-Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
