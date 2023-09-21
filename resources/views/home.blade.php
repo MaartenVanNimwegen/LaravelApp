@@ -32,17 +32,19 @@
 						@auth
                                 @if (auth()->user()->hasRole('admin'))
 								@foreach ($groups as $group)
-									{{ $group->name }}
+									{{ $group->naam }}
 									@foreach ($group->users as $user)
 										{{ $user->name }}
 									@endforeach
 								@endforeach
 								
                                 @elseif (auth()->user()->hasRole('student'))
-                                    {{ $groep[0]->naam }}
-									@foreach ($groep[0]->users as $user)
+									@if (isset($groep[0]))
+                                    	{{ $groep[0]->naam }}
+										@foreach ($groep[0]->users as $user)
 										{{ $user->name }}
-									@endforeach
+										@endforeach
+									@endif
 										
 									
                                 @endif
@@ -55,10 +57,9 @@
                             <th>Naam</th>
                             <th>Klas</th>
                             <th>Datum</th>
+							<th>Aanmeldingen</th>
                             @auth
-                                @if (auth()->user()->hasRole('admin'))
-                                    <th>Aanmeldingen</th>
-                                @elseif (auth()->user()->hasRole('student'))
+                                @if (auth()->user()->hasRole('student'))
                                     <th>Aanmelden</th>
                                 @endif
                             @endauth
@@ -69,10 +70,9 @@
                                     <td>{{ $les->naam }}</td>
                                     <td>{{ $les->klas }}</td>
                                     <td>{{ $les->start }}</td>
+									<td>count</td>
                                     @auth
-                                        @if (auth()->user()->hasRole('admin'))
-                                            <td>count</td>
-                                        @elseif (auth()->user()->hasRole('student'))
+                                        @if (auth()->user()->hasRole('student'))
                                             <td>
                                                 <form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">
                                                     @csrf
