@@ -14,9 +14,8 @@ class HomeController extends Controller
 
         $upcommingLessons = $lesController->ViewAllComingLessons();
         $groups = $groepController->index();
-        $group = $groepController->show($user->id);
-
-        return view('home', compact('upcommingLessons', 'groups', 'group'));
+        $groep = $groepController->show($user->id);
+        return view('home', compact('upcommingLessons', 'groups', 'groep'));
     }
 
     public function isUserAangemeld($lesId)

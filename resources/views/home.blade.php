@@ -31,16 +31,16 @@
 			@endif
 						@auth
                                 @if (auth()->user()->hasRole('admin'))
-								@foreach ($groups as $groep)
-									{{ $groep->naam }}
-									@foreach ($groep->users as $user)
+								@foreach ($groups as $group)
+									{{ $group->name }}
+									@foreach ($group->users as $user)
 										{{ $user->name }}
 									@endforeach
 								@endforeach
 								
                                 @elseif (auth()->user()->hasRole('student'))
-                                    {{ $groep->naam }}
-									@foreach ($groep->users as $user)
+                                    {{ $groep[0]->naam }}
+									@foreach ($groep[0]->users as $user)
 										{{ $user->name }}
 									@endforeach
 										
