@@ -15,15 +15,20 @@
 <body>
     @extends('layouts.app')
 
-    @section('content')
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-9">
-                    @if (Session::has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ Session::get('success') }}
-                        </div>
-					@endif
+@section('content')
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-9">
+			@if(Session::has('success'))
+					<div class="alert alert-success" role="alert">
+							{{ Session::get('success') }}
+					</div>
+			@endif
+			@if(Session::has('error'))
+					<div class="alert alert-danger" role="alert">
+							{{ Session::get('error') }}
+					</div>
+			@endif
 						@auth
                                 @if (auth()->user()->hasRole('admin'))
 								@foreach ($groups as $groep)

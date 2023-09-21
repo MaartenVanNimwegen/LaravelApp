@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Les;
+use App\Models\Les_user_koppel;
 use Illuminate\Http\Request;
 
 class LesController extends Controller
@@ -46,12 +47,21 @@ class LesController extends Controller
 
     public function Aanmelden(Request $request, $id)
     {
-        // $id contains the ID of the lesson clicked
-        // Your controller logic goes here
-        // You can access request data using $request
+        $userId = auth()->user()->id;
 
-        // For example, you can return a redirect response
-        return redirect()->route('home')->with('success', 'Controller method called for lesson with ID ' . $id);
+        $records = Les_user_koppel::where('userId', $userId)
+        ->where('lesId', $id)
+        ->get();
+        if ($records->isEmpty()) {
+            $les_user_koppel = new Les_user_koppel();
+            $les_user_koppel->userId = $userId;
+            $les_user_koppel->lesId = $id;
+            $les_user_koppel->save();
+    
+            return redirect()->route('home');
+        }
+
+        return redirect()->route('home')->with('error', 'Je bent al aangemeld voor deze les!');
     }
 
 }
