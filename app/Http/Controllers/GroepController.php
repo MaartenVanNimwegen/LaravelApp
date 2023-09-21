@@ -13,7 +13,8 @@ class GroepController extends Controller
      */
     public function index()
     {
-        //
+        $Groups = Groep::with('users')->get();
+            return $Groups;
     }
 
     /**
@@ -64,9 +65,16 @@ class GroepController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Groep $groep)
+    public function show($userId)
     {
-        //
+        // Retrieve the user by their ID
+    $user = User::findOrFail($userId);
+
+    // Retrieve the groups associated with the user
+    $userGroups = $user->groups;
+
+    // You can further process and display the user's groups as needed
+    return $userGroups;
     }
 
     /**
