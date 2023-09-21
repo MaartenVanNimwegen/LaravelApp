@@ -46,4 +46,15 @@ class LesController extends Controller
             return $upcommingLessons;
         }
     }
+
+    public function Aanmelden(Request $request, $id)
+    {
+        // $id contains the ID of the lesson clicked
+        // Your controller logic goes here
+        // You can access request data using $request
+
+        // For example, you can return a redirect response
+        return redirect()->route('home')->with('success', 'Controller method called for lesson with ID ' . $id);
+    }
+
 }
