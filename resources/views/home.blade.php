@@ -23,7 +23,13 @@
           <th>Naam</th>
           <th>Klas</th>
           <th>Datum</th>
+          @auth
+            @if (auth()->user()->hasRole('admin'))
           <th>Aanmeldingen</th>
+            @elseif (auth()->user()->hasRole('student'))
+            <th>Aanmelden</th>
+            @endif
+          @endauth         
         </thead>
         <tbody>
           @foreach($upcommingLessons as $les)
@@ -31,7 +37,13 @@
             <td>{{ $les->naam }}</td>
             <td>{{ $les->klas }}</td>
             <td>{{ $les->start }}</td>
-            <td>Todo</td>
+            @auth
+              @if (auth()->user()->hasRole('admin'))
+            <td>count</td>
+              @elseif (auth()->user()->hasRole('student'))
+            <td><a href="aanmelden?les=id">Aanmelden</a></td>
+              @endif
+            @endauth         
           </tr>
           @endforeach
         </tbody>

@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/wachtwoord', [PasswordController::class, 'showPasswordForm'])->name('password.form');
-Route::post('/wachtwoord/{code?}', [PasswordController::class, 'setPassword'])->name('set-password');
+Route::post('/wachtwoord', [PasswordController::class, 'setPassword'])->name('set-password');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
