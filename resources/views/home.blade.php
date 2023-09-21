@@ -14,7 +14,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-9">
-
+      @if(Session::has('success'))
+          <div class="alert alert-success" role="alert">
+              {{ Session::get('success') }}
+          </div>
+      @endif
     </div>
     <div class="col-3">
       <h1>Opkomende lessen:</h1>
@@ -41,7 +45,12 @@
               @if (auth()->user()->hasRole('admin'))
             <td>count</td>
               @elseif (auth()->user()->hasRole('student'))
-            <td><a href="aanmelden?les=id">Aanmelden</a></td>
+            <td>
+              <form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">
+                @csrf
+                <button class="btn btn-primary" type="submit">Aanmelden</button>
+              </form>
+            </td>
               @endif
             @endauth         
           </tr>

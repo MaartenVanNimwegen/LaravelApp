@@ -1,12 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\LesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\GroepController;
 use App\Http\Controllers\PasswordController;
+
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\StudentMiddleware;
 
 
 Route::get('/', function () {
@@ -33,4 +36,9 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/addLes', [LesController::class, 'addLesPost'])->name('addLes');
     Route::get('/addGroup', [GroepController::class, 'create'])->name('createGroup');
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
+    
+});
+
+Route::group(['middleware' => StudentMiddleware::class], function () {
+    Route::post('/aanmelden/{id}', [LesController::class, 'Aanmelden'])->name('aanmelden');
 });
