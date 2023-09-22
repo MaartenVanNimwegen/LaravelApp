@@ -41,6 +41,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);   
@@ -51,6 +52,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);   
@@ -61,6 +63,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);   
@@ -71,6 +74,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]); 
@@ -81,6 +85,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -91,6 +96,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -101,6 +107,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -111,6 +118,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -121,6 +129,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -131,6 +140,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Test1234!'),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -141,6 +151,7 @@ class UserSeeder extends Seeder
             'password_code' => uuid_create(),
             'role' => 'student',
             'klas' => 'SEITO21A',
+            'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
