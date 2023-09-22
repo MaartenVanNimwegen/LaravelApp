@@ -62,7 +62,25 @@
                                                 <h5 class="card-title">{{ $groep[0]->naam }}</h5>
                                                 <ul>
                                                     @foreach ($groep[0]->users as $user)
-                                                        <li>{{ $user->name }}</li>
+                                                        <li>
+                                                            @php
+                                                                $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
+                                                            @endphp
+                                                            @if ($aanwezigheid)
+                                                                <div
+                                                                    style="width: 20px; height: 20px; background-color: green; border-radius: 50%;">
+                                                                </div>
+                                                            @elseif(!$aanwezigheid)
+                                                                <div
+                                                                    style="width: 20px; height: 20px; background-color: red; border-radius: 50%;">
+                                                                </div>
+                                                            @else
+                                                                <div
+                                                                    style="width: 20px; height: 20px; background-color: gray; border-radius: 50%;">
+                                                                </div>
+                                                            @endif
+                                                            {{ $user->name }}
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             </div>
