@@ -1,5 +1,6 @@
 <?php
 use App\Models\Les_user_koppel;
+use App\Models\User;
 
 function isUserAangemeld($lesId)
 {
@@ -17,4 +18,11 @@ function GetLesCount($lesId)
 {
     $records = Les_user_koppel::where('lesId', $lesId)->get();
     return count($records);
+}
+
+function IsStudentAanwezig($userId)
+{
+    $record = User::where('id', $userId)->get()->first();
+
+    return $record->aanwezig == 1 ? true : false;
 }
