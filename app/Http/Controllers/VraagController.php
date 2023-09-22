@@ -22,4 +22,9 @@ class VraagController extends Controller
         $vraag->save();
         return back()->with('success', 'Je vraag is gesteld!');
     }
+
+    public function ArchiveerVraag($id)
+    {
+        dd('test');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 use App\Models\Les_user_koppel;
 use App\Models\User;
+use App\Models\Vraag;
 
 function isUserAangemeld($lesId)
 {
@@ -25,4 +26,15 @@ function IsStudentAanwezig($userId)
     $record = User::where('id', $userId)->get()->first();
 
     return $record->aanwezig == 1 ? true : false;
+}
+
+function GetAllActiveVragen()
+{
+    return Vraag::where('status', 0)->get();
+}
+
+function GetUsersNameById($id)
+{
+    $user = User::where('id', $id)->get()->first();
+    return $user->name;
 }

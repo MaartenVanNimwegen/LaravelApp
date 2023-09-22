@@ -41,7 +41,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
-
+                                        <h1>Teams:</h1>
                                         @foreach ($groups as $group)
                                             <div class="col-md-4">
                                                 <div class="card shadow rounded-3 bg-body border-0 mt-3">
@@ -64,6 +64,36 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    <br>
+                                    <h1>Vragen:</h1>
+                                    @php
+                                        $vragen = GetAllActiveVragen();
+                                    @endphp
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Vraag</th>
+                                            <th>Steller</th>
+                                            <th>Archiveer</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($vragen as $vraag)
+                                                @php
+                                                    $naam = GetUsersNameById($vraag->userId);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $vraag->vraag }}</td>
+                                                    <td>{{ $naam }}</td>
+                                                    <td>
+                                                        <form action="{{ route('archiveerVraag', ['id' => $vraag->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-primary" type="submit">Archiveer</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             @elseif (auth()->user()->hasRole('student'))
                                 @if (isset($groep[0]))
