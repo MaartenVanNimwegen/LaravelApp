@@ -22,67 +22,92 @@
                     <div class="row">
                         @auth
                             @if (auth()->user()->hasRole('admin'))
-                                @foreach ($groups as $group)
-                                    <div class="col-md-4">
-                                        <div class="card shadow rounded bg-body border-0 m-4">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ $group->naam }}</h5>
-                                                <ul>
-                                                    @foreach ($group->users as $user)
-                                                        <li>
-                                                            @php
-                                                                $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
-                                                            @endphp
-                                                            @if ($aanwezigheid)
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: green; border-radius: 50%;">
-                                                                </div>
-                                                            @elseif(!$aanwezigheid)
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: red; border-radius: 50%;">
-                                                                </div>
-                                                            @else
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: gray; border-radius: 50%;">
-                                                                </div>
-                                                            @endif
-                                                            {{ $user->name }}
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                <div class="col-12">
+                                    @if (Session::has('error'))
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ Session::get('error') }}
                                         </div>
+                                    @endif
+                                    @if (Session::has('success'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ Session::get('success') }}
+                                        </div>
+                                    @endif
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" role="alert">
+                                            @foreach ($errors->all() as $error)
+                                                {{ $error }}
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <div class="row">
+
+                                        @foreach ($groups as $group)
+                                            <div class="col-md-4">
+                                                <div class="card shadow rounded-3 bg-body border-0 mt-3">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $group->naam }}</h5>
+                                                        @foreach ($group->users as $user)
+                                                            <li class="d-flex align-items-center">
+                                                                @php
+                                                                    $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
+                                                                    $dotBackgroundColor = $aanwezigheid ? 'green' : 'red';
+                                                                @endphp
+                                                                <div
+                                                                    style="width: 20px; height: 20px; background-color: {{ $dotBackgroundColor }}; border-radius: 50%; margin-right: 10px;">
+                                                                </div>
+                                                                <span>{{ $user->name }}</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
                             @elseif (auth()->user()->hasRole('student'))
                                 @if (isset($groep[0]))
-                                    <div class="col-md-4">
-                                        <div class="card shadow rounded bg-body border-0 m-4">
+                                    <div class="col-12">
+                                        @if (Session::has('error'))
+                                            <div class="alert alert-danger m-4" role="alert">
+                                                {{ Session::get('error') }}
+                                            </div>
+                                        @endif
+                                        @if (Session::has('success'))
+                                            <div class="alert alert-success m-4" role="alert">
+                                                {{ Session::get('success') }}
+                                            </div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger m-4" role="alert">
+                                                @foreach ($errors->all() as $error)
+                                                    {{ $error }}
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                        <div class="card shadow rounded-3 bg-body border-0 m-4">
                                             <div class="card-body">
-                                                <h5 class="card-title">{{ $groep[0]->naam }}</h5>
-                                                <ul>
-                                                    @foreach ($groep[0]->users as $user)
-                                                        <li>
-                                                            @php
-                                                                $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
-                                                            @endphp
-                                                            @if ($aanwezigheid)
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: green; border-radius: 50%;">
-                                                                </div>
-                                                            @elseif(!$aanwezigheid)
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: red; border-radius: 50%;">
-                                                                </div>
-                                                            @else
-                                                                <div
-                                                                    style="width: 20px; height: 20px; background-color: gray; border-radius: 50%;">
-                                                                </div>
-                                                            @endif
-                                                            {{ $user->name }}
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                                                <h3>{{ $groep[0]->naam }}</h3>
+                                                <h5>Leden:</h5>
+                                                @foreach ($groep[0]->users as $user)
+                                                    <li class="d-flex align-items-center">
+                                                        @php
+                                                            $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
+                                                            $dotBackgroundColor = $aanwezigheid ? 'green' : 'red';
+                                                        @endphp
+                                                        <div
+                                                            style="width: 20px; height: 20px; background-color: {{ $dotBackgroundColor }}; border-radius: 50%; margin-right: 10px;">
+                                                        </div>
+                                                        <span>{{ $user->name }}</span>
+                                                    </li>
+                                                @endforeach
+                                                <br>
+                                                <form action="{{ route('stelVraag') }}" method="POST">
+                                                    @csrf
+                                                    <input type="text" name="vraag" id="vraag"
+                                                        class="form-control w-50" placeholder="Uw vraag hier...">
+                                                    <button class="btn btn-primary" type="submit">Stel een vraag</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

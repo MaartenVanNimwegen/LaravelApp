@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroepController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\VraagController;
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\StudentMiddleware;
@@ -41,4 +42,5 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
 
 Route::group(['middleware' => StudentMiddleware::class], function () {
     Route::post('/aanmelden/{id}', [LesController::class, 'Aanmelden'])->name('aanmelden');
+    Route::post('/stelVraag', [VraagController::class, 'StelVraag'])->name('stelVraag');
 });
