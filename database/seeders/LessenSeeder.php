@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class LessenSeeder extends Seeder
 {
@@ -19,8 +17,8 @@ class LessenSeeder extends Seeder
             'info' => 'De basis van object oriented programming',
             'klas' => 'SEITO21A',
             'start' => '2023-11-29 12:10:00',
-            'min' => '1',
-            'max' => '20',
+            'min' => '5',
+            'max' => '10',
         ]);
 
         DB::table('les')->insert([
@@ -28,8 +26,26 @@ class LessenSeeder extends Seeder
             'info' => 'Basiskennis database structuring',
             'klas' => 'SEITO21A',
             'start' => '2023-11-29 13:00:00',
-            'min' => '1',
-            'max' => '20',
+            'min' => '5',
+            'max' => '15',
         ]);  
+
+        DB::table('les')->insert([
+            'naam' => 'Gevorderd database structure',
+            'info' => 'Basiskennis vereist',
+            'klas' => 'SEITO21A',
+            'start' => '2023-12-01 13:00:00',
+            'min' => '5',
+            'max' => '10',
+        ]);
+        
+        DB::table('les')->insert([
+            'naam' => 'Gevorderd OOP',
+            'info' => 'Basiskennis vereist',
+            'klas' => 'SEITO21A',
+            'start' => '2023-12-2 13:00:00',
+            'min' => '5',
+            'max' => '10',
+        ]);
     }
 }

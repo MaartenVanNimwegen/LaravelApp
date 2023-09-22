@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             LessenSeeder::class,
+            GroepenSeeder::class,
+            Groep_user_koppelSeeder::class,
         ]);
     }
 }
