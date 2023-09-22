@@ -9,6 +9,7 @@ class Les extends Model
 {
     use HasFactory;
 
+    protected $table = 'les';
     /**
      * The attributes that are mass assignable.
      *
