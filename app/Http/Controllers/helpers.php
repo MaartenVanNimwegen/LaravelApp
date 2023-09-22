@@ -12,3 +12,9 @@ function isUserAangemeld($lesId)
     }
     return true;
 }
+
+function GetLesCount($lesId)
+{
+    $records = Les_user_koppel::where('lesId', $lesId)->get();
+    return count($records);
+}

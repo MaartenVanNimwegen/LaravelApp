@@ -13,82 +13,110 @@
 </head>
 
 <body>
-    @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-8">
+		<div class="col-7">
 			@if(Session::has('success'))
-					<div class="alert alert-success" role="alert">
-							{{ Session::get('success') }}
-					</div>
+            <div class="alert alert-success" role="alert">
+                    {{ Session::get('success') }}
+            </div>
 			@endif
 			@if(Session::has('error'))
-					<div class="alert alert-danger" role="alert">
-							{{ Session::get('error') }}
-					</div>
-			@endif
-						@auth
-                                @if (auth()->user()->hasRole('admin'))
-								@foreach ($groups as $group)
-									{{ $group->naam }}
-									@foreach ($group->users as $user)
-										{{ $user->name }}
-									@endforeach
-								@endforeach
-								
-                                @elseif (auth()->user()->hasRole('student'))
-									@if (isset($groep[0]))
-                                    	{{ $groep[0]->naam }}
-										@foreach ($groep[0]->users as $user)
-										{{ $user->name }}
-										@endforeach
-									@endif
-										
-									
-                                @endif
-                            @endauth
-                </div>
-                <div class="col-4">
-                    <h1>Opkomende lessen:</h1>
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Naam</th>
-                            <th>Klas</th>
-                            <th>Datum</th>
-							<th>Aanmeldingen</th>
-                            @auth
-                                @if (auth()->user()->hasRole('student'))
-                                    <th>Aanmelden</th>
-                                @endif
-                            @endauth
-                        </thead>
-                        <tbody>
-                            @foreach ($upcommingLessons as $les)
-                                <tr>
-                                    <td>{{ $les->naam }}</td>
-                                    <td>{{ $les->klas }}</td>
-                                    <td>{{ $les->start }}</td>
-									<td>count</td>
-                                    @auth
-                                        @if (auth()->user()->hasRole('student'))
-                                            <td>
-                                                <form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary" type="submit">Aanmelden</button>
-                                                </form>
-                                            </td>
-                                        @endif
-                                    @endauth
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            <div class="alert alert-danger" role="alert">
+                    {{ Session::get('error') }}
             </div>
+			@endif
+            @auth
+                    @if (auth()->user()->hasRole('admin'))
+                    @foreach ($groups as $group)
+                        {{ $group->naam }}
+                        @foreach ($group->users as $user)
+                            {{ $user->name }}
+                        @endforeach
+                    @endforeach
+                    
+                    @elseif (auth()->user()->hasRole('student'))
+                        @if (isset($groep[0]))
+                            {{ $groep[0]->naam }}
+                            @foreach ($groep[0]->users as $user)
+                            {{ $user->name }}
+                            @endforeach
+                        @endif
+                            
+                        
+                    @endif
+                @endauth
         </div>
-    @endsection
+        <div class="col-5">
+			<h1>Opkomende lessen:</h1>
+			<table class="table table-striped">
+				<thead>
+					<th>Status</th>
+					<th>Naam</th>
+					<th>Klas</th>
+					<th>Datum</th>
+					<th>Min, Max</th>
+					<th>Aanmeldingen</th>
+					@auth
+						@if (auth()->user()->hasRole('student'))
+							<th>Aanmelden</th>
+						@endif
+					@endauth         
+				</thead>
+				<tbody>
+					@foreach($upcommingLessons as $les)
+					@php
+						$aangemeld = isUserAangemeld($les->id);
+					@endphp
+                    @php
+                    $aanmeldingen = GetLesCount($les->id);
+                    @endphp
+					<tr>
+						<td>
+                            @php
+						    $kleur = $aanmeldingen >= $les->min ? 'green' : 'red';
+                            @endphp
+                            @if($kleur === 'green')
+                                <div style="width: 20px; height: 20px; background-color: green; border-radius: 50%;"></div>
+                            @elseif($kleur === 'red')
+                                <div style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>
+                            @else
+                                <div style="width: 20px; height: 20px; background-color: gray; border-radius: 50%;"></div>
+                            @endif
+                            
+                        </td>
+						<td>{{ $les->naam }}</td>
+						<td>{{ $les->klas }}</td>
+						<td>{{ $les->start }}</td>
+						<td>{{ $les->min }}, {{ $les->max }}</td>
+						<td>
+                            <p>{{ $aanmeldingen }}</p>
+                        </td>
+						@auth
+							@if (auth()->user()->hasRole('student'))
+						<td>
+							@if ($aangemeld === false)
+							<form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">
+								@csrf
+								<button class="btn btn-primary" type="submit">Aanmelden</button>
+							</form>
+							@else
+								<p>Aangemeld</p>
+							@endif
+						</td>
+							@endif
+						@endauth         
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+    </div>
+</div>
+@endsection
 
 </body>
 
