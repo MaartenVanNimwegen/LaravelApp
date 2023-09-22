@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->role = $request->role;
         $user->klas = $request->klas;
-        $user->password_code = Str::random();
+        $user->password_code = uuid_create();
 
         $user->save();
 

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('password_code')->nullable();
             $table->string('role');
             $table->string('klas')->nullable();
+            $table->integer('aanwezig')->default(0);
             $table->timestamps();
         });
     }
