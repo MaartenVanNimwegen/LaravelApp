@@ -19,36 +19,26 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-7">
-			@if(Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                    {{ Session::get('success') }}
-            </div>
-			@endif
-			@if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                    {{ Session::get('error') }}
-            </div>
-			@endif
             @auth
-                    @if (auth()->user()->hasRole('admin'))
-                    @foreach ($groups as $group)
-                        {{ $group->naam }}
-                        @foreach ($group->users as $user)
-                            {{ $user->name }}
-                        @endforeach
+                @if (auth()->user()->hasRole('admin'))
+                @foreach ($groups as $group)
+                    {{ $group->naam }}
+                    @foreach ($group->users as $user)
+                        {{ $user->name }}
                     @endforeach
-                    
-                    @elseif (auth()->user()->hasRole('student'))
-                        @if (isset($groep[0]))
-                            {{ $groep[0]->naam }}
-                            @foreach ($groep[0]->users as $user)
-                            {{ $user->name }}
-                            @endforeach
-                        @endif
-                            
-                        
+                @endforeach
+                
+                @elseif (auth()->user()->hasRole('student'))
+                    @if (isset($groep[0]))
+                        {{ $groep[0]->naam }}
+                        @foreach ($groep[0]->users as $user)
+                        {{ $user->name }}
+                        @endforeach
                     @endif
-                @endauth
+                        
+                    
+                @endif
+            @endauth
         </div>
         <div class="col-5">
 			<h1>Opkomende lessen:</h1>
