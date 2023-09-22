@@ -19,6 +19,8 @@ class LessenSeeder extends Seeder
             'start' => '2023-11-29 12:10:00',
             'min' => '5',
             'max' => '10',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         DB::table('les')->insert([
@@ -28,6 +30,8 @@ class LessenSeeder extends Seeder
             'start' => '2023-11-29 13:00:00',
             'min' => '5',
             'max' => '15',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);  
 
         DB::table('les')->insert([
@@ -37,6 +41,8 @@ class LessenSeeder extends Seeder
             'start' => '2023-12-01 13:00:00',
             'min' => '5',
             'max' => '10',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         
         DB::table('les')->insert([
@@ -46,6 +52,8 @@ class LessenSeeder extends Seeder
             'start' => '2023-12-2 13:00:00',
             'min' => '5',
             'max' => '10',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('groep', function (Blueprint $table) {
             $table->id();
             $table->string('naam');
-            $table->integer('status');
+            $table->integer('status')->default(0); // Default of active
             $table->timestamps();
         });
     }

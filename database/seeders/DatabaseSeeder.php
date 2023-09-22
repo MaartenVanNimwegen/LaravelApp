@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LessenSeeder::class,
             GroepenSeeder::class,
+            VragenSeeder::class,
             Groep_user_koppelSeeder::class,
+            Les_user_koppelSeeder::class,
         ]);
     }
 }

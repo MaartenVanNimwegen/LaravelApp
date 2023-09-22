@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('vragen', function (Blueprint $table) {
             $table->id();
             $table->string('vraag');
-            $table->integer('status');
+            $table->integer('status')->default(0); // Default of active
             $table->timestamps();
         });
     }
