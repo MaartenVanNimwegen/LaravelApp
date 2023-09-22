@@ -126,16 +126,6 @@ class UserSeeder extends Seeder
         ]);  
 
         DB::table('users')->insert([
-            'name' => 'Arwin Walsweer',
-            'email' => 'arwin@gmail.com',
-            'password' => Hash::make('Test1234!'),
-            'role' => 'student',
-            'klas' => 'SEITO21A',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);  
-
-        DB::table('users')->insert([
             'name' => 'Shibin Pan',
             'email' => 'shibin@gmail.com',
             'password' => Hash::make('Test1234!'),
@@ -144,5 +134,15 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        
+        DB::table('users')->insert([
+            'name' => 'Arwin Walsweer',
+            'email' => 'arwin@gmail.com',
+            'password_code' => uuid_create(),
+            'role' => 'student',
+            'klas' => 'SEITO21A',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);  
     }
 }
