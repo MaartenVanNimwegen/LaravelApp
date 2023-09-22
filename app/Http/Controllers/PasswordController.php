@@ -27,48 +27,37 @@ class PasswordController extends Controller
         return view('wachtwoord', compact('code'));
     }
 
-
     public function setPassword(Request $request)
     {
         $code = $request->input('code');
-
         $user = User::where('password_code', $code)->first();
 
         if (!$user || !is_null($user->password)) {
             return redirect()->route('login')->with('error', 'Deze link is ongeldig of verlopen.');
         }
 
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'password' => [
-                    Password::min(8)
-                        ->letters()
-                        ->mixedCase()
-                        ->numbers()
-                        ->symbols(),
-                    'confirmed',
-                    'required',
-                ]
+        $validator = Validator::make($request->all(), [
+            'password' => [
+                Password::min(8)->letters()->mixedCase()->numbers()->symbols(),
+                'confirmed',
+                'required',
             ],
-            [
-                'password' => 'Je gekozen wachtwoord is niet sterk genoeg! Gebruik minstens een: hoofdletter, kleine letter, symbool, letter en een cijfer!',
-                'confirmed' => 'De gegeven wachtwoorden komen niet overeen!',
-                'required' => 'Alle velden zijn verplicht'
-            ]
-        );
+        ], [
+            'password' => 'Je gekozen wachtwoord is niet sterk genoeg! Gebruik minstens een: hoofdletter, kleine letter, symbool, letter en een cijfer!',
+            'confirmed' => 'De gegeven wachtwoorden komen niet overeen!',
+            'required' => 'Alle velden zijn verplicht'
+        ]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         }
 
         $user->update([
             'password' => bcrypt($request->input('password')),
             'password_code' => null,
         ]);
-        return redirect('login')->with('success', 'Uw wachtwoord is opgeslagen, u kunt nu inloggen!');
 
+        return redirect('login')->with('success', 'Uw wachtwoord is opgeslagen, u kunt nu inloggen!');
     }
+
 }
