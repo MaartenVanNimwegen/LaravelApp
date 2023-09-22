@@ -97,7 +97,6 @@
                                                 style="width: 20px; height: 20px; background-color: gray; border-radius: 50%;">
                                             </div>
                                         @endif
-
                                     </td>
                                     <td>{{ $les->naam }}</td>
                                     <td>{{ $les->klas }}</td>
