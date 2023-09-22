@@ -16,7 +16,7 @@ class Groep_user_koppelSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        
+
         DB::table('groep_user_koppel')->insert([
             'userId' => 4,
             'groepId' => 1,
@@ -44,7 +44,7 @@ class Groep_user_koppelSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        
+
         DB::table('groep_user_koppel')->insert([
             'userId' => 8,
             'groepId' => 2,
@@ -60,8 +60,22 @@ class Groep_user_koppelSeeder extends Seeder
         ]);
 
         DB::table('groep_user_koppel')->insert([
-            'userId' => 12,
+            'userId' => 10,
             'groepId' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('groep_user_koppel')->insert([
+            'userId' => 11,
+            'groepId' => 3,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('groep_user_koppel')->insert([
+            'userId' => 12,
+            'groepId' => 3,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
