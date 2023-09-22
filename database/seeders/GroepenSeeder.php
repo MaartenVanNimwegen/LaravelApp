@@ -16,5 +16,12 @@ class GroepenSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('groep')->insert([
+            'naam' => 'Team 2',
+            'status' => '0',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

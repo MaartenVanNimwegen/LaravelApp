@@ -28,9 +28,9 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $group->naam }}</h5>
                                                 <ul>
-													@foreach ($group->users as $user)
-														<li>{{ $user->name }}</li>
-													@endforeach
+                                                    @foreach ($group->users as $user)
+                                                        <li>{{ $user->name }}</li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
@@ -38,10 +38,18 @@
                                 @endforeach
                             @elseif (auth()->user()->hasRole('student'))
                                 @if (isset($groep[0]))
-                                    {{ $groep[0]->naam }}
-                                    @foreach ($groep[0]->users as $user)
-                                        {{ $user->name }}
-                                    @endforeach
+                                    <div class="col-md-4">
+                                        <div class="card shadow rounded bg-body border-0 m-4">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $groep[0]->naam }}</h5>
+                                                <ul>
+                                                    @foreach ($groep[0]->users as $user)
+                                                        <li>{{ $user->name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                             @endif
                         @endauth
