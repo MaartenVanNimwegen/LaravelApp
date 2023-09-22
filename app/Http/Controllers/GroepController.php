@@ -81,7 +81,7 @@ class GroepController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Groep $groep)
     {
 
     }
@@ -89,7 +89,7 @@ class GroepController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Groep $groep)
+    public function update(Request $id, Groep $groep)
     {
         
         $groep = Groep::findOrFail($id);
