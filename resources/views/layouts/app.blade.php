@@ -30,7 +30,7 @@
                     <form action="{{ route('aanwezig')}}"
                         method="POST">
                         @csrf
-                        <button class="nav-link active" type="submit">Aanmelden</button>
+                        <button class="nav-link active" type="submit">Aanwezig melden</button>
                     </form>
                     @endif
                 @endauth
