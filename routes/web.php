@@ -44,4 +44,5 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
 Route::group(['middleware' => StudentMiddleware::class], function () {
     Route::post('/aanmelden/{id}', [LesController::class, 'Aanmelden'])->name('aanmelden');
     Route::post('/stelVraag', [VraagController::class, 'StelVraag'])->name('stelVraag');
+    Route::post('/aanwezig', [GroepController::class, 'Aanwezig'])->name('aanwezig');
 });

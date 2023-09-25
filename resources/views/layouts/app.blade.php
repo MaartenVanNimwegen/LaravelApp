@@ -27,7 +27,11 @@
                         <a class="nav-link active" aria-current="page" href="register">Gebruiker toevoegen</a>
                     </li>
                     @elseif (auth()->user()->hasRole('student'))
-                    <a class="nav-link active" aria-current="page" href="aanwezig">Aanwezig melden</a>
+                    <form action="{{ route('aanwezig')}}"
+                        method="POST">
+                        @csrf
+                        <button class="nav-link active" type="submit">Aanmelden</button>
+                    </form>
                     @endif
                 @endauth
                 </ul>
