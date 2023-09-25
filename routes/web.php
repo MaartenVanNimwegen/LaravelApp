@@ -38,6 +38,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::get('/addGroup', [GroepController::class, 'create'])->name('createGroup');
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
     Route::post('/archiveerVraag/{id}', [VraagController::class, 'ArchiveerVraag'])->name('archiveerVraag');
+    Route::post('/archiveerGroep/{id}', [GroepController::class, 'ArchiveerGroep'])->name('archiveerGroep');
 });
 
 Route::group(['middleware' => StudentMiddleware::class], function () {

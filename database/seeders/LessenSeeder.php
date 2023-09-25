@@ -29,7 +29,7 @@ class LessenSeeder extends Seeder
             'klas' => 'SEITO21A',
             'start' => '2023-11-29 13:00:00',
             'min' => '5',
-            'max' => '15',
+            'max' => '10',
             'created_at' => now(),
             'updated_at' => now(),
         ]);  
@@ -39,8 +39,8 @@ class LessenSeeder extends Seeder
             'info' => 'Basiskennis vereist',
             'klas' => 'SEITO21A',
             'start' => '2023-12-01 13:00:00',
-            'min' => '5',
-            'max' => '10',
+            'min' => '2',
+            'max' => '5',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

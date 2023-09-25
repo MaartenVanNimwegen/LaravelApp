@@ -59,6 +59,12 @@
                                                                 <span>{{ $user->name }}</span>
                                                             </li>
                                                         @endforeach
+                                                        <br>
+                                                        <form action="{{ route('archiveerGroep', ['id' => $group->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-primary" type="submit">Archiveer</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,7 +197,11 @@
                                     </td>
                                     <td>{{ $les->naam }}</td>
                                     <td>{{ $les->klas }}</td>
-                                    <td>{{ $les->start }}</td>
+                                    <td>
+                                        @php
+                                            echo date_format(new DateTime($les->start), 'd-m H:i');
+                                        @endphp
+                                    </td>
                                     <td>{{ $les->min }}, {{ $les->max }}</td>
                                     <td>
                                         <p>{{ $aanmeldingen }}</p>
@@ -200,10 +210,15 @@
                                         @if (auth()->user()->hasRole('student'))
                                             <td>
                                                 @if ($aangemeld === false)
-                                                    <form action="{{ route('aanmelden', ['id' => $les->id]) }}" method="POST">
-                                                        @csrf
-                                                        <button class="btn btn-primary" type="submit">Aanmelden</button>
-                                                    </form>
+                                                    @if ($aanmeldingen < $les->max)
+                                                        <form action="{{ route('aanmelden', ['id' => $les->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-primary" type="submit">Aanmelden</button>
+                                                        </form>
+                                                    @else
+                                                        <p>Vol!</p>
+                                                    @endif
                                                 @else
                                                     <p>Aangemeld</p>
                                                 @endif
