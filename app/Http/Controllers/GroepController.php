@@ -32,9 +32,9 @@ class GroepController extends Controller
                   ->where('groep.status', 0);
         })
         ->where('role', '!=', 'admin')// Exclude users with 'admin' role
-        ->whereNull('password_code') 
+        ->whereNull('password_code')
         ->get();
-        
+
         return view('createGroup', compact('availableUsers'));
     }
 
@@ -47,7 +47,7 @@ class GroepController extends Controller
             'naam' => 'required|string|max:255',
             'user_ids' => 'array', // Make sure user_ids is an array
         ]);
-    
+
         // Create a new group with a status of 0
         $groep = new Groep;
         $groep->naam = $validatedData['naam'];
@@ -57,10 +57,10 @@ class GroepController extends Controller
         if (isset($validatedData['user_ids'])) {
             $groep->users()->attach($validatedData['user_ids']);
         }
-    
+
         // Redirect to a success page or return a response as needed
         return redirect()->route('home')->with('success', 'Group created successfully');
-    
+
     }
 
     /**
@@ -91,7 +91,7 @@ class GroepController extends Controller
      */
     public function update(Request $id, Groep $groep)
     {
-        
+
         $groep = Groep::findOrFail($id);
         $groep->fill(['status' => '1']);
 
@@ -104,6 +104,13 @@ class GroepController extends Controller
     public function destroy(Groep $groep)
     {
         //
+    }
+    public function ArchiveerGroep($id)
+    {
+        $groep = Groep::findOrFail($id);
+        $groep->update(['status' => '1']);
+
+        return redirect()->route('home')->with('success', 'Groep gearchiveerd');
     }
 
     public function aanwezig(Groep $groep)
