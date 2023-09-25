@@ -24,6 +24,12 @@ class VraagController extends Controller
 
     public function ArchiveerVraag($id)
     {
-        dd('test');
+        $vraag = Vraag::find($id);
+        if ($vraag) {
+            $vraag->delete();
+            return redirect()->back()->with('success', 'De vraag is verwijderd.');
+        } else {
+            return redirect()->back()->with('error', 'Er is een fout opgetreden!');
+        }
     }
 }
