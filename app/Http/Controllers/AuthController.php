@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\MiddlewareNameResolver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -20,6 +22,16 @@ class AuthController extends Controller
 
     public function registerPost(Request $request)
     {
+        $validator = Validator::make($request->input(), ['name' => ['max:70', 'required'], 'email' => ['required', 'max:250'], 'role' => ['required', 'max:7', 'min:5', Rule::in(['admin', 'student'])], 'klas' => ['required', 'max:50'],], ['name.max' => 'De naam mag niet langer zijn dan 70 karakters!', 'email' => 'Het email-adres is te lang. Gebruik maximaal 250 karakters.', 'role' => 'Rol is ongeldig. De rol mag alleen "admin" of "student" zijn!', 'klas' => 'De klas naam mag niet langer zijn dan 50 karakters!', 'required' => 'Alle velden zijn verplicht!',]);
+
+        $userExists = User::where('email', $request->email)->exists();
+        if ($userExists) {
+            return redirect()->back()->withErrors('Er is al een gebruiker met dit email-adres!');
+        }
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
         $user = new User();
 
         $user->name = $request->name;

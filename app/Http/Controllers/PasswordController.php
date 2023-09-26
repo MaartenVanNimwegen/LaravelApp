@@ -36,7 +36,7 @@ class PasswordController extends Controller
             return redirect()->route('login')->with('error', 'Deze link is ongeldig of verlopen.');
         }
 
-        $validator = Validator::make($request->all(), ['password' => [Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed', 'required',],], ['password' => 'Je gekozen wachtwoord is niet sterk genoeg! Gebruik minstens een: hoofdletter, kleine letter, symbool, letter en een cijfer!', 'confirmed' => 'De gegeven wachtwoorden komen niet overeen!', 'required' => 'Alle velden zijn verplicht']);
+        $validator = Validator::make($request->all(), ['password' => [Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed', 'required',],], ['password' => 'Je gekozen wachtwoord is niet sterk genoeg! Gebruik minstens een: hoofdletter, kleine letter, symbool, letter, een cijfer en 8 karakters!', 'confirmed' => 'De gegeven wachtwoorden komen niet overeen!', 'required' => 'Alle velden zijn verplicht']);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
