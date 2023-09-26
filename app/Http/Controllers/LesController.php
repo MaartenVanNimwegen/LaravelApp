@@ -17,7 +17,28 @@ class LesController extends Controller
 
     public function addLesPost(Request $request)
     {
-        $validator = Validator::make($request->input(), ['name' => ['max:70', 'required',], 'info' => ['required', 'max:255'], 'klas' => ['required', 'max:255'], 'min' => ['required', 'between:1,50', 'numeric',], 'max' => ['required', 'between:1,200', 'numeric',], 'start' => ['required', 'after:today', 'date',],], ['name.max' => 'De naam mag niet langer zijn dan 70 karakters!', 'max' => 'U mag bij :attribute maximaal :max karakters gebruiken!', 'min.between' => 'Het minimale aantal leerlingen moet liggen tussen :min en :max!', 'max.between' => 'Het maximale aantal leerlingen moet liggen tussen :min en :max!', 'numeric' => 'In veld :attribute mogen alleen cijfers ingevuld worden!', 'required' => 'Alle velden zijn verplicht!', 'date' => 'De waarde moet een geldige datum zijn', 'after' => 'Je kan alleen in de toekomst plannen',]);
+        $validator = Validator::make(
+            $request->input(),
+            [
+                'name' => ['max:70', 'required', 'string'],
+                'info' => ['required', 'max:255', 'string'],
+                'klas' => ['required', 'max:255', 'string'],
+                'min' => ['required', 'between:1,50', 'numeric', 'string'],
+                'max' => ['required', 'between:1,200', 'numeric', 'string'],
+                'start' => ['required', 'after:today', 'date', 'string'],
+            ],
+            [
+                'name.max' => 'De naam mag niet langer zijn dan 70 karakters!',
+                'max' => 'U mag bij :attribute maximaal :max karakters gebruiken!',
+                'min.between' => 'Het minimale aantal leerlingen moet liggen tussen :min en :max!',
+                'max.between' => 'Het maximale aantal leerlingen moet liggen tussen :min en :max!',
+                'numeric' => 'In veld :attribute mogen alleen cijfers ingevuld worden!',
+                'required' => 'Alle velden zijn verplicht!',
+                'date' => 'De waarde moet een geldige datum zijn',
+                'after' => 'Je kan alleen in de toekomst plannen',
+                'string' => 'De waarde moet van het type tekst zijn!'
+            ]
+        );
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
