@@ -32,4 +32,14 @@ class VraagController extends Controller
             return redirect()->back()->with('error', 'Er is een fout opgetreden!');
         }
     }
+
+    public function delete(Vraag $question)
+    {
+            // Add your code to delete the question here
+    $question->delete();
+            
+    // Redirect to a relevant page (e.g., the question index page)
+    return redirect()->route('home')->with('success', 'Vraag succesvol verwijderd');
+
+    }
 }
