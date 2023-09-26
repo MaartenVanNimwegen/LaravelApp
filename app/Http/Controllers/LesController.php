@@ -62,6 +62,7 @@ class LesController extends Controller
         $currentDate = Carbon::now();
 
         $upcomingLessons = Les::whereDate('start', '>', $currentDate)
+            ->orderBy('start', 'asc')
             ->get();
 
         return $upcomingLessons;
