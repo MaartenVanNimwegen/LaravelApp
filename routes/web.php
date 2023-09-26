@@ -17,12 +17,11 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/wachtwoord', [PasswordController::class, 'showPasswordForm'])->name('password.form');
-Route::post('/wachtwoord', [PasswordController::class, 'setPassword'])->name('set-password');
-
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
+    Route::get('/wachtwoord', [PasswordController::class, 'showPasswordForm'])->name('password.form');
+    Route::post('/wachtwoord', [PasswordController::class, 'setPassword'])->name('set-password');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -39,6 +38,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
     Route::post('/VerwijderVraag/{id}', [VraagController::class, 'VerwijderVraag'])->name('VerwijderVraag');
     Route::post('/archiveerGroep/{id}', [GroepController::class, 'ArchiveerGroep'])->name('archiveerGroep');
+    Route::delete('/questions/{question}', [VraagController::class, 'delete'])->name('deleteQuestion');
 });
 
 Route::group(['middleware' => StudentMiddleware::class], function () {
