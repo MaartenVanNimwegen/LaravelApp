@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Groep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class GroepController extends Controller
 {
@@ -22,6 +24,7 @@ class GroepController extends Controller
      */
     public function create()
     {
+
         // Get all users who are not part of any archived group
         $availableUsers = User::whereNotIn('id', function ($query) {
             $query->select('users.id')
@@ -43,9 +46,24 @@ class GroepController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'naam' => 'required|string|max:75',
+            'user_ids' => 'array|required|min:1', // Make sure user_ids is an array
+        ], [
+            'max' => 'Je gekozen naam is te lang!',
+            'string' => 'De waarde moet van het type tekst zijn!',
+            'array' => 'Het veld wat je hebt ingevuld klopt niet!',
+            'min' => 'Het veld mag niet leeg zijn!',
+            'required' => 'Alle velden zijn verplicht!'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
         $validatedData = $request->validate([
             'naam' => 'required|string|max:75',
-            'user_ids' => 'array', // Make sure user_ids is an array
+            'user_ids' => 'array|required|min:1', // Make sure user_ids is an array
         ]);
 
         // Create a new group with a status of 0
@@ -128,7 +146,7 @@ class GroepController extends Controller
         // Update other fields as needed
 
         $user->save();
-        
+
         return redirect()->route('home')->with('success', 'Je bent aangemeld');
     }
 }
