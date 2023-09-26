@@ -17,7 +17,7 @@ class LesController extends Controller
 
     public function addLesPost(Request $request)
     {
-        $validator = Validator::make($request->input(), ['name' => ['max:70', 'required',], 'info' => ['required', 'max:255'], 'klas' => ['required', 'max:255'], 'start' => ['required',], 'min' => ['required', 'between:1,50', 'numeric',], 'max' => ['required', 'between:1,200', 'numeric',],], ['name.max' => 'De naam max niet langer zijn dan 70 karakters!', 'max' => 'U mag bij attribute maximaal :max karakters gebruiken!', 'min.between' => 'Het minimale aantal leerlingen moet liggen tussen :min en :max!', 'max.between' => 'Het maximale aantal leerlingen moet liggen tussen :min en :max!', 'numeric' => 'In veld :attribute mogen alleen cijfers ingevuld worden!', 'required' => 'Alle velden zijn verplicht!',]);
+        $validator = Validator::make($request->input(), ['name' => ['max:70', 'required',], 'info' => ['required', 'max:255'], 'klas' => ['required', 'max:255'], 'min' => ['required', 'between:1,50', 'numeric',], 'max' => ['required', 'between:1,200', 'numeric',], 'start' => ['required', 'after:today', 'date',],], ['name.max' => 'De naam mag niet langer zijn dan 70 karakters!', 'max' => 'U mag bij :attribute maximaal :max karakters gebruiken!', 'min.between' => 'Het minimale aantal leerlingen moet liggen tussen :min en :max!', 'max.between' => 'Het maximale aantal leerlingen moet liggen tussen :min en :max!', 'numeric' => 'In veld :attribute mogen alleen cijfers ingevuld worden!', 'required' => 'Alle velden zijn verplicht!', 'date' => 'De waarde moet een geldige datum zijn', 'after' => 'Je kan alleen in de toekomst plannen',]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
@@ -31,12 +31,6 @@ class LesController extends Controller
         $les->start = $request->start;
         $les->min = $request->min;
         $les->max = $request->max;
-
-        $now = date('Y-m-d');
-        if ($les->start < $now) {
-            return back()->with('error', 'Je kan geen les in het verleden plannen!');
-        }
-
         $les->save();
 
         return back()->with('success', 'De les werd succesvol aangemaakt!');
