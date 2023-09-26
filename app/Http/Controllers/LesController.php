@@ -69,11 +69,22 @@ class LesController extends Controller
 
     public function Aanmelden(Request $request, $id)
     {
+        $les = Les::find($id);
+        if (!$les){
+            return redirect()->back()->with('error', 'Er is iets fout gegaan!');
+
+        }
+
         $userId = auth()->user()->id;
 
         $records = Les_user_koppel::where('userId', $userId)
             ->where('lesId', $id)
             ->get();
+
+        if ($les->max >= count($records)){
+            return redirect()->back()->with('error', 'Deze les is al vol!');
+        }
+        
         if ($records->isEmpty()) {
             $les_user_koppel = new Les_user_koppel();
             $les_user_koppel->userId = $userId;
