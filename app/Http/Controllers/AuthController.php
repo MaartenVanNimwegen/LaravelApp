@@ -49,7 +49,7 @@ class AuthController extends Controller
             return redirect('/home');
         }
 
-        return back()->with('error', 'De combinatie van het e-mailadres en het wachtwoord is niet bij ons bekend. ');
+        return back()->with('error', 'De combinatie van het e-mailadres en het wachtwoord is niet bij ons bekend.');
     }
 
     public function logout()
