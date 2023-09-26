@@ -82,10 +82,10 @@ class LesController extends Controller
             ->where('lesId', $id)
             ->get();
 
-        if ($les->max >= count($records)){
+        if ($les->max <= count($records)){
             return redirect()->back()->with('error', 'Deze les is al vol!');
         }
-        
+
         if ($records->isEmpty()) {
             $les_user_koppel = new Les_user_koppel();
             $les_user_koppel->userId = $userId;
