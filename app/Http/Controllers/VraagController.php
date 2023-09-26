@@ -48,7 +48,7 @@ class VraagController extends Controller
     {
             // Add your code to delete the question here
     $question->delete();
-            
+
     // Redirect to a relevant page (e.g., the question index page)
     return redirect()->route('home')->with('success', 'Vraag succesvol verwijderd');
 

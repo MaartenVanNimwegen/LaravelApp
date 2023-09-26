@@ -38,7 +38,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
     Route::post('/VerwijderVraag/{id}', [VraagController::class, 'VerwijderVraag'])->name('VerwijderVraag');
     Route::post('/archiveerGroep/{id}', [GroepController::class, 'ArchiveerGroep'])->name('archiveerGroep');
-    Route::delete('/questions/{question}', [VraagController::class, 'delete'])->name('deleteQuestion');
+    Route::delete('/deleteQuestion/{question}', [VraagController::class, 'delete'])->name('deleteQuestion');
 });
 
 Route::group(['middleware' => StudentMiddleware::class], function () {

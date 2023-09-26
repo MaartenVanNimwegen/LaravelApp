@@ -198,12 +198,12 @@
                                             @foreach ($vragen as $vraag)
                                                 <tr>
                                                     <td>{{ $vraag->vraag }}</td>
-                                                    <td>{{ GetUsersNameById($vraag->userId); }}</td>
+                                                    <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
-                                                        <form action="{{ route('VerwijderVraag', ['id' => $vraag->id]) }}"
-                                                            method="POST">
+                                                        <form action="{{ route('deleteQuestion', $vraag->id) }}" method="POST">
                                                             @csrf
-                                                            <a href="{{url('delete_post',$post->id}}" class="btn btn-primary" onclick="confirmation(event)" type="submit">Verwijder</a>
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-action="{{ route('deleteQuestion', $vraag->id) }}">Delete</button>
 
                                                         </form>
                                                     </td>
@@ -300,6 +300,31 @@
                     </div>
                 </div>
             </div>
+            <!-- Add this modal to your Blade template or layout file -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this question?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="deleteForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
         @endsection
 </body>
 <script>
@@ -318,6 +343,15 @@
 
         showArchivedCheckbox.addEventListener("change", function() {
             archivedDiv.style.display = this.checked ? "block" : "none";
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var action = button.data('action'); // Extract action attribute from data-action
+            $('#deleteForm').attr('action', action); // Set the form's action attribute
         });
     });
 </script>
