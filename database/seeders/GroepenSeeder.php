@@ -40,7 +40,7 @@ class GroepenSeeder extends Seeder
 
         DB::table('groep')->insert([
             'naam' => 'Team 5',
-            'status' => '0',
+            'status' => '1',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

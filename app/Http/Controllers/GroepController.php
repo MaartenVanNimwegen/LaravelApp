@@ -112,4 +112,23 @@ class GroepController extends Controller
 
         return redirect()->route('home')->with('success', 'Groep gearchiveerd');
     }
+
+    public function aanwezig(Groep $groep)
+    {
+        $userId = auth()->user()->id;
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Item not found');
+        }
+
+        // Update the item record with the new data
+        $user->aanwezig = 1;
+        // Update other fields as needed
+
+        $user->save();
+        
+        return redirect()->route('home')->with('success', 'Je bent aangemeld');
+    }
 }

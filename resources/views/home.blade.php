@@ -41,8 +41,24 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <h1>Teams:</h1>
+                                        <h4>Active groepen:</h4>
+
+
+                                        @php
+                                            $collectionOfActiveGroups = [];
+                                            $collectionOfInactiveGroups = [];
+                                        @endphp
                                         @foreach ($groups as $group)
+                                            @php
+                                                if ($group->status === 0) {
+                                                    $collectionOfActiveGroups[] = $group;
+                                                } else {
+                                                    $collectionOfInactiveGroups[] = $group;
+                                                }
+                                            @endphp
+                                        @endforeach
+
+                                        @foreach ($collectionOfActiveGroups as $group)
                                             <div class="col-md-4">
                                                 <div class="card shadow rounded-3 bg-body border-0 mt-3">
                                                     <div class="card-body">
@@ -79,7 +95,7 @@
                                         <thead>
                                             <th>Vraag</th>
                                             <th>Steller</th>
-                                            <th>Archiveer</th>
+                                            <th>Verwijder</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($vragen as $vraag)
@@ -93,13 +109,41 @@
                                                         <form action="{{ route('archiveerVraag', ['id' => $vraag->id]) }}"
                                                             method="POST">
                                                             @csrf
-                                                            <button class="btn btn-primary" type="submit">Archiveer</button>
+                                                            <button class="btn btn-primary" type="submit">Verwijder</button>
                                                         </form>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <h4>Gearchiveerde groepen:</h4>
+                                    @foreach ($collectionOfInactiveGroups as $group)
+                                        <div class="col-md-4">
+                                            <div class="card shadow rounded-3 bg-body border-0 mt-3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ $group->naam }}</h5>
+                                                    @foreach ($group->users as $user)
+                                                        <li class="d-flex align-items-center">
+                                                            @php
+                                                                $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
+                                                                $dotBackgroundColor = $aanwezigheid ? 'green' : 'red';
+                                                            @endphp
+                                                            <div
+                                                                style="width: 20px; height: 20px; background-color: {{ $dotBackgroundColor }}; border-radius: 50%; margin-right: 10px;">
+                                                            </div>
+                                                            <span>{{ $user->name }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                    <br>
+                                                    <form action="{{ route('archiveerGroep', ['id' => $group->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button class="btn btn-primary" type="submit">Archiveer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             @elseif (auth()->user()->hasRole('student'))
                                 @if (isset($groep[0]))
