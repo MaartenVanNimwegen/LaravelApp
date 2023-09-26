@@ -37,7 +37,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/addLes', [LesController::class, 'addLesPost'])->name('addLes');
     Route::get('/addGroup', [GroepController::class, 'create'])->name('createGroup');
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
-    Route::post('/archiveerVraag/{id}', [VraagController::class, 'ArchiveerVraag'])->name('archiveerVraag');
+    Route::post('/VerwijderVraag/{id}', [VraagController::class, 'VerwijderVraag'])->name('VerwijderVraag');
     Route::post('/archiveerGroep/{id}', [GroepController::class, 'ArchiveerGroep'])->name('archiveerGroep');
 });
 

@@ -196,17 +196,15 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($vragen as $vraag)
-                                                @php
-                                                    $naam = GetUsersNameById($vraag->userId);
-                                                @endphp
                                                 <tr>
                                                     <td>{{ $vraag->vraag }}</td>
-                                                    <td>{{ $naam }}</td>
+                                                    <td>{{ GetUsersNameById($vraag->userId); }}</td>
                                                     <td>
-                                                        <form action="{{ route('archiveerVraag', ['id' => $vraag->id]) }}"
+                                                        <form action="{{ route('VerwijderVraag', ['id' => $vraag->id]) }}"
                                                             method="POST">
                                                             @csrf
-                                                            <button class="btn btn-primary" type="submit">Verwijder</button>
+                                                            <a href="{{url('delete_post',$post->id}}" class="btn btn-primary" onclick="confirmation(event)" type="submit">Verwijder</a>
+
                                                         </form>
                                                     </td>
                                                 </tr>
