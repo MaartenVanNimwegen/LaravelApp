@@ -180,39 +180,43 @@
             <br>
             <div class="row">
                 <div class="col-6">
-                    <div class="card shadow rounded-3 bg-body border-0 mt-3">
-                        <div class="card-body">
-                            <h1 class="card-title">Vragen:</h1>
-                            @php
-                                $vragen = GetAllActiveVragen();
-                            @endphp
-                            <table class="table table-striped">
-                                <thead>
-                                    <th>Vraag</th>
-                                    <th>Steller</th>
-                                    <th>Verwijder</th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($vragen as $vraag)
-                                        @php
-                                            $naam = GetUsersNameById($vraag->userId);
-                                        @endphp
-                                        <tr>
-                                            <td>{{ $vraag->vraag }}</td>
-                                            <td>{{ $naam }}</td>
-                                            <td>
-                                                <form action="{{ route('archiveerVraag', ['id' => $vraag->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary" type="submit">Verwijder</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @auth
+                        @if (auth()->user()->hasRole('admin'))
+                            <div class="card shadow rounded-3 bg-body border-0 mt-3">
+                                <div class="card-body">
+                                    <h1 class="card-title">Vragen:</h1>
+                                    @php
+                                        $vragen = GetAllActiveVragen();
+                                    @endphp
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Vraag</th>
+                                            <th>Steller</th>
+                                            <th>Verwijder</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($vragen as $vraag)
+                                                @php
+                                                    $naam = GetUsersNameById($vraag->userId);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $vraag->vraag }}</td>
+                                                    <td>{{ $naam }}</td>
+                                                    <td>
+                                                        <form action="{{ route('archiveerVraag', ['id' => $vraag->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-primary" type="submit">Verwijder</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
                 <div class="col-6">
                     <div class="card shadow rounded-3 bg-body border-0 mt-3">
