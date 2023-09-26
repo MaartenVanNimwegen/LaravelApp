@@ -14,6 +14,23 @@
     <div class="row justify-content-center mt-5">
         <div class="col-lg-4">
             <div class="card">
+                @if (Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
+                @if (Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
+                    </div>
+                @endif
                 <div class="card-header">
                     <h1 class="card-title">Voeg groep toe</h1>
                 </div>
