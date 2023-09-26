@@ -22,7 +22,24 @@ class AuthController extends Controller
 
     public function registerPost(Request $request)
     {
-        $validator = Validator::make($request->input(), ['name' => ['max:70', 'required'], 'email' => ['required', 'max:250'], 'role' => ['required', 'max:7', 'min:5', Rule::in(['admin', 'student'])], 'klas' => ['required', 'max:50'],], ['name.max' => 'De naam mag niet langer zijn dan 70 karakters!', 'email' => 'Het email-adres is te lang. Gebruik maximaal 250 karakters.', 'role' => 'Rol is ongeldig. De rol mag alleen "admin" of "student" zijn!', 'klas' => 'De klas naam mag niet langer zijn dan 50 karakters!', 'required' => 'Alle velden zijn verplicht!',]);
+        $validator = Validator::make(
+            $request->input(),
+            [
+                'name' => ['max:70', 'required', 'string'],
+                'email' => ['required', 'max:250', 'email'],
+                'role' => ['required', 'max:7', 'min:5', Rule::in(['admin', 'student'])],
+                'klas' => ['required', 'max:50', 'string'],
+            ],
+            [
+                'name.max' => 'De naam mag niet langer zijn dan 70 karakters!',
+                'email.max' => 'Het email-adres is te lang. Gebruik maximaal 250 karakters.',
+                'role' => 'Rol is ongeldig. De rol mag alleen "admin" of "student" zijn!',
+                'klas' => 'De klas naam mag niet langer zijn dan 50 karakters!',
+                'required' => 'Alle velden zijn verplicht!',
+                'string' => 'De waarde moet van het type tekst zijn!',
+                'email.email' => 'Gebruik een geldig email-adres'
+            ]
+        );
 
         $userExists = User::where('email', $request->email)->exists();
         if ($userExists) {
@@ -52,6 +69,27 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
+        $validator = Validator::make(
+            $request->input(),
+            [
+                'email' => ['required', 'max:250', 'email'],
+                'password' => ['required', 'string'],
+            ],
+            [
+                'name.max' => 'De naam mag niet langer zijn dan 70 karakters!',
+                'email.max' => 'Het email-adres is te lang. Gebruik maximaal 250 karakters.',
+                'role' => 'Rol is ongeldig. De rol mag alleen "admin" of "student" zijn!',
+                'klas' => 'De klas naam mag niet langer zijn dan 50 karakters!',
+                'required' => 'Alle velden zijn verplicht!',
+                'string' => 'De waarde moet van het type tekst zijn!',
+                'email' => 'Gebruik een geldig email-adres',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
         $credetials = [
             'email' => $request->email,
             'password' => $request->password,
