@@ -24,7 +24,7 @@ class LesController extends Controller
                 'info' => ['required', 'max:255', 'string'],
                 'klas' => ['required', 'max:255', 'string'],
                 'min' => ['required', 'between:1,50', 'numeric', 'string'],
-                'max' => ['required', 'between:1,200', 'numeric', 'string'],
+                'max' => ['required', 'between:1,200', 'numeric', 'string', 'gt:min'],
                 'start' => ['required', 'after:today', 'date', 'string'],
             ],
             [
@@ -36,7 +36,8 @@ class LesController extends Controller
                 'required' => 'Alle velden zijn verplicht!',
                 'date' => 'De waarde moet een geldige datum zijn',
                 'after' => 'Je kan alleen in de toekomst plannen',
-                'string' => 'De waarde moet van het type tekst zijn!'
+                'string' => 'De waarde moet van het type tekst zijn!',
+                'gt' => 'Het maximale aantal studenten moet groter zijn dan het minimale aantal studenten!'
             ]
         );
 

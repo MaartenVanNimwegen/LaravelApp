@@ -132,12 +132,5 @@ class Groep_user_koppelSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
-        DB::table('groep_user_koppel')->insert([
-            'userId' => 13,
-            'groepId' => 5,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
     }
 }
