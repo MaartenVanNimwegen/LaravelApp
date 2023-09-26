@@ -10,7 +10,18 @@ class VraagController extends Controller
 {
     public function StelVraag(Request $request)
     {
-        $validator = Validator::make($request->input(), ['vraag' => 'required|max:255'], ['vraag' => 'Het vragen veld moet worden ingevuld!',]);
+        $validator = Validator::make(
+            $request->input(),
+            [
+                'vraag' => ['max:255', 'required', 'string'],
+            ],
+            [
+                'required' => 'Het vragen veld moet worden ingevuld!',
+                'max' => 'Je kan maximaal 255 karakters gebruiken!',
+                'string' => 'De vraag mag alleen tekst zijn!'
+            ]
+        );
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }

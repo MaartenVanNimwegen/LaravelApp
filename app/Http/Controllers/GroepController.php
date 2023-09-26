@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Groep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class GroepController extends Controller
 {
@@ -14,7 +16,7 @@ class GroepController extends Controller
     public function index()
     {
         $Groups = Groep::with('users')->get();
-            return $Groups;
+        return $Groups;
     }
 
     /**
@@ -22,18 +24,19 @@ class GroepController extends Controller
      */
     public function create()
     {
+
         // Get all users who are not part of any archived group
         $availableUsers = User::whereNotIn('id', function ($query) {
             $query->select('users.id')
-                  ->from('users')
-                  ->join('groep_user_koppel', 'users.id', '=', 'groep_user_koppel.userId')
-                  ->join('groep', 'groep_user_koppel.groepId', '=', 'groep.id')
-                  ->whereColumn('groep_user_koppel.userId', 'users.id')
-                  ->where('groep.status', 0);
+                ->from('users')
+                ->join('groep_user_koppel', 'users.id', '=', 'groep_user_koppel.userId')
+                ->join('groep', 'groep_user_koppel.groepId', '=', 'groep.id')
+                ->whereColumn('groep_user_koppel.userId', 'users.id')
+                ->where('groep.status', 0);
         })
-        ->where('role', '!=', 'admin')// Exclude users with 'admin' role
-        ->whereNull('password_code')
-        ->get();
+            ->where('role', '!=', 'admin') // Exclude users with 'admin' role
+            ->whereNull('password_code')
+            ->get();
 
         return view('createGroup', compact('availableUsers'));
     }
@@ -43,9 +46,26 @@ class GroepController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'naam' => 'required|string|max:75',
+            'user_ids' => 'array|required|min:1',
+            // Make sure user_ids is an array
+        ], [
+            'max' => 'Je gekozen naam is te lang!',
+            'string' => 'De waarde moet van het type tekst zijn!',
+            'array' => 'Het veld wat je hebt ingevuld klopt niet!',
+            'min' => 'Het veld mag niet leeg zijn!',
+            'required' => 'Alle velden zijn verplicht!'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
         $validatedData = $request->validate([
             'naam' => 'required|string|max:75',
-            'user_ids' => 'array', // Make sure user_ids is an array
+            'user_ids' => 'array|required|min:1',
+            // Make sure user_ids is an array
         ]);
 
         // Create a new group with a status of 0
@@ -69,13 +89,13 @@ class GroepController extends Controller
     public function show($userId)
     {
         // Retrieve the user by their ID
-    $user = User::findOrFail($userId);
+        $user = User::findOrFail($userId);
 
-    // Retrieve the groups associated with the user
-    $userGroups = $user->groups;
+        // Retrieve the groups associated with the user
+        $userGroups = $user->groups;
 
-    // You can further process and display the user's groups as needed
-    return $userGroups;
+        // You can further process and display the user's groups as needed
+        return $userGroups;
     }
 
     /**
@@ -128,7 +148,7 @@ class GroepController extends Controller
         // Update other fields as needed
 
         $user->save();
-        
+
         return redirect()->route('home')->with('success', 'Je bent aangemeld');
     }
 }
