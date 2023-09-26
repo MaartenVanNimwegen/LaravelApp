@@ -44,7 +44,7 @@ class GroepController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'naam' => 'required|string|max:255',
+            'naam' => 'required|string|max:75',
             'user_ids' => 'array', // Make sure user_ids is an array
         ]);
 
@@ -59,7 +59,7 @@ class GroepController extends Controller
         }
 
         // Redirect to a success page or return a response as needed
-        return redirect()->route('home')->with('success', 'Group created successfully');
+        return redirect()->route('home')->with('success', 'Groep aangemaakt');
 
     }
 
