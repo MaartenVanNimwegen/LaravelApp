@@ -59,6 +59,7 @@
                                             }
                                         @endphp
                                     @endforeach
+                                    {{-- Checkboxes --}}
                                     <div class="content">
                                         <label for="showActive">Toon active groepen:</label>
                                         <input type="checkbox" id="showActive" class="checkbox" checked>
@@ -114,9 +115,6 @@
                                                                         $aanwezigheid = IsStudentAanwezig($user->id) ? true : false;
                                                                         $dotBackgroundColor = $aanwezigheid ? 'green' : 'red';
                                                                     @endphp
-                                                                    <div
-                                                                        style="width: 20px; height: 20px; background-color: {{ $dotBackgroundColor }}; border-radius: 50%; margin-right: 10px;">
-                                                                    </div>
                                                                     <span>{{ $user->name }}</span>
                                                                 </li>
                                                             @endforeach

@@ -10,36 +10,38 @@ class GroepenSeeder extends Seeder
 {
     public function run(): void
     {
+        // Active groepen
         DB::table('groep')->insert([
-            'naam' => 'Team 1',
+            'naam' => 'Team 9.1',
             'status' => '0',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('groep')->insert([
-            'naam' => 'Team 2',
-            'status' => '0',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('groep')->insert([
-            'naam' => 'Team 3',
+            'naam' => 'Team 9.2',
             'status' => '0',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         
+        // Inactive groepen
         DB::table('groep')->insert([
-            'naam' => 'Team 4',
-            'status' => '0',
+            'naam' => 'Team 8.1',
+            'status' => '1',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('groep')->insert([
-            'naam' => 'Team 5',
+            'naam' => 'Team 8.2',
+            'status' => '1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('groep')->insert([
+            'naam' => 'Team 8.3',
             'status' => '1',
             'created_at' => now(),
             'updated_at' => now(),

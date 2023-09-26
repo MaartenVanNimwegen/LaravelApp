@@ -44,8 +44,8 @@ class UserSeeder extends Seeder
             'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);   
-        
+        ]);
+
         DB::table('users')->insert([
             'name' => 'Tim Hammersma',
             'email' => 'tim@gmail.com',
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);   
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Kevin Kamstra',
@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);   
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Christian Koopman',
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]); 
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Dinand Lieuwes',
@@ -88,7 +88,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Martijn Graafsma',
@@ -99,7 +99,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Remon Dollenkamp',
@@ -110,7 +110,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Jesper Minks',
@@ -121,7 +121,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Tobias van Spanning',
@@ -132,7 +132,7 @@ class UserSeeder extends Seeder
             'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
 
         DB::table('users')->insert([
             'name' => 'Shibin Pan',
@@ -144,7 +144,7 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        
+
         DB::table('users')->insert([
             'name' => 'Arwin Walsweer',
             'email' => 'arwin@gmail.com',
@@ -154,6 +154,6 @@ class UserSeeder extends Seeder
             'aanwezig' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);  
+        ]);
     }
 }
