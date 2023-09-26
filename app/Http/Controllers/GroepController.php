@@ -16,7 +16,7 @@ class GroepController extends Controller
     public function index()
     {
         $Groups = Groep::with('users')->get();
-            return $Groups;
+        return $Groups;
     }
 
     /**
@@ -28,15 +28,15 @@ class GroepController extends Controller
         // Get all users who are not part of any archived group
         $availableUsers = User::whereNotIn('id', function ($query) {
             $query->select('users.id')
-                  ->from('users')
-                  ->join('groep_user_koppel', 'users.id', '=', 'groep_user_koppel.userId')
-                  ->join('groep', 'groep_user_koppel.groepId', '=', 'groep.id')
-                  ->whereColumn('groep_user_koppel.userId', 'users.id')
-                  ->where('groep.status', 0);
+                ->from('users')
+                ->join('groep_user_koppel', 'users.id', '=', 'groep_user_koppel.userId')
+                ->join('groep', 'groep_user_koppel.groepId', '=', 'groep.id')
+                ->whereColumn('groep_user_koppel.userId', 'users.id')
+                ->where('groep.status', 0);
         })
-        ->where('role', '!=', 'admin')// Exclude users with 'admin' role
-        ->whereNull('password_code')
-        ->get();
+            ->where('role', '!=', 'admin') // Exclude users with 'admin' role
+            ->whereNull('password_code')
+            ->get();
 
         return view('createGroup', compact('availableUsers'));
     }
@@ -48,7 +48,8 @@ class GroepController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'naam' => 'required|string|max:75',
-            'user_ids' => 'array|required|min:1', // Make sure user_ids is an array
+            'user_ids' => 'array|required|min:1',
+            // Make sure user_ids is an array
         ], [
             'max' => 'Je gekozen naam is te lang!',
             'string' => 'De waarde moet van het type tekst zijn!',
@@ -63,7 +64,8 @@ class GroepController extends Controller
 
         $validatedData = $request->validate([
             'naam' => 'required|string|max:75',
-            'user_ids' => 'array|required|min:1', // Make sure user_ids is an array
+            'user_ids' => 'array|required|min:1',
+            // Make sure user_ids is an array
         ]);
 
         // Create a new group with a status of 0
@@ -87,13 +89,13 @@ class GroepController extends Controller
     public function show($userId)
     {
         // Retrieve the user by their ID
-    $user = User::findOrFail($userId);
+        $user = User::findOrFail($userId);
 
-    // Retrieve the groups associated with the user
-    $userGroups = $user->groups;
+        // Retrieve the groups associated with the user
+        $userGroups = $user->groups;
 
-    // You can further process and display the user's groups as needed
-    return $userGroups;
+        // You can further process and display the user's groups as needed
+        return $userGroups;
     }
 
     /**

@@ -71,9 +71,8 @@ class LesController extends Controller
     public function Aanmelden(Request $request, $id)
     {
         $les = Les::find($id);
-        if (!$les){
+        if (!$les) {
             return redirect()->back()->with('error', 'Er is iets fout gegaan!');
-
         }
 
         $userId = auth()->user()->id;
