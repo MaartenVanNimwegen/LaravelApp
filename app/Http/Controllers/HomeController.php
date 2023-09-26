@@ -13,6 +13,7 @@ class HomeController extends Controller
         $user = auth()->user();
 
         $upcommingLessons = $lesController->ViewAllComingLessons();
+        
         $groups = $groepController->index();
         $groep = $groepController->show($user->id);
         return view('home', compact('upcommingLessons', 'groups', 'groep'));
