@@ -33,7 +33,7 @@ class VraagController extends Controller
         return back()->with('success', 'Je vraag is gesteld!');
     }
 
-    public function ArchiveerVraag($id)
+    public function VerwijderVraag($id)
     {
         $vraag = Vraag::find($id);
         if ($vraag) {

@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoÇTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .hidden {
             display: none;
@@ -185,10 +186,8 @@
                                                     <td>{{ $vraag->vraag }}</td>
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
-                                                        <form >
-                                                            @csrf
-                                                            <button onclick="Popup()" class="btn btn-danger" type="submit"">Verwijder</button>
-                                                        </form>
+                                                        <button class="btn btn-danger" type="submit"
+                                                            onclick="Popup('<?php echo $vraag->id ?>')">Delete</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -330,8 +329,7 @@
     });
 </script>
 <script>
-    function Popup() {
-        console.log('test');
+    function Popup(id) {
         Swal.fire({
             title: 'Weet je zeker dat je deze vraag wil verwijderen?',
             showDenyButton: true,
@@ -340,9 +338,9 @@
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
+                console.log(id);
+                window.location.href = "{{ route('VerwijderVraag', '') }}" + "/" + id;
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
             }
         })
     }
