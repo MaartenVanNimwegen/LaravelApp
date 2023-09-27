@@ -15,6 +15,8 @@
             display: none;
         }
     </style>
+    <script src="node_modules/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
 </head>
 
 <body>
@@ -183,14 +185,9 @@
                                                     <td>{{ $vraag->vraag }}</td>
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
-                                                        <form action="{{ route('deleteQuestion', $vraag->id) }}"
-                                                            method="POST">
+                                                        <form >
                                                             @csrf
-                                                            <button onclick="Popup()>Verwijder</button>
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                                data-target="#confirmDeleteModal"
-                                                                data-action="{{ route('deleteQuestion', $vraag->id) }}">Delete</button>
+                                                            <button onclick="Popup()" class="btn btn-danger" type="submit"">Verwijder</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -334,6 +331,7 @@
 </script>
 <script>
     function Popup() {
+        console.log('test');
         Swal.fire({
             title: 'Weet je zeker dat je deze vraag wil verwijderen?',
             showDenyButton: true,
