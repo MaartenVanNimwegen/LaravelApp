@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoÇTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
     <style>
         .hidden {
@@ -200,11 +200,14 @@
                                                     <td>{{ $vraag->vraag }}</td>
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
-                                                        <form action="{{ route('deleteQuestion', $vraag->id) }}" method="POST">
+                                                        <form action="{{ route('deleteQuestion', $vraag->id) }}"
+                                                            method="POST">
                                                             @csrf
+                                                            <button onclick="Popup()>Verwijder</button>
                                                             @method('DELETE')
-                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-action="{{ route('deleteQuestion', $vraag->id) }}">Delete</button>
-
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                                data-target="#confirmDeleteModal"
+                                                                data-action="{{ route('deleteQuestion', $vraag->id) }}">Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -301,29 +304,30 @@
                 </div>
             </div>
             <!-- Add this modal to your Blade template or layout file -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this question?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteForm" action="" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete this question?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="deleteForm" action="" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
         @endsection
 </body>
@@ -347,13 +351,21 @@
     });
 </script>
 <script>
-    $(document).ready(function () {
-        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var action = button.data('action'); // Extract action attribute from data-action
-            $('#deleteForm').attr('action', action); // Set the form's action attribute
-        });
-    });
+    function Popup() {
+        Swal.fire({
+            title: 'Weet je zeker dat je deze vraag wil verwijderen?',
+            showDenyButton: true,
+            confirmButtonText: 'Ja',
+            denyButtonText: `Nee`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
 </script>
 
 </html>
