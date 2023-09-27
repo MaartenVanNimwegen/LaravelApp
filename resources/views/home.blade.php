@@ -329,10 +329,10 @@
 <script>
     function Popup(id) {
         Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: 'Weet je zeker dat je deze vraag wil verwijderen?',
             showDenyButton: true,
-            confirmButtonText: 'Save',
-            denyButtonText: `Don't save`,
+            confirmButtonText: 'Ja',
+            denyButtonText: `Nee`,
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
