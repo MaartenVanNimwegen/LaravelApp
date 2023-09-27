@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .hidden {
             display: none;
@@ -183,15 +184,8 @@
                                                     <td>{{ $vraag->vraag }}</td>
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
-                                                        <form action="{{ route('deleteQuestion', $vraag->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                                data-target="#confirmDeleteModal"
-                                                                data-action="{{ route('deleteQuestion', $vraag->id) }}">Delete</button>
-
-                                                        </form>
+                                                        <button class="btn btn-danger" type="submit"
+                                                            onclick="Popup('<?php echo $vraag->id ?>')">Delete</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -334,13 +328,21 @@
     });
 </script>
 <script>
-    $(document).ready(function() {
-        $('#confirmDeleteModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var action = button.data('action'); // Extract action attribute from data-action
-            $('#deleteForm').attr('action', action); // Set the form's action attribute
-        });
-    });
+    function Popup(id) {
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                console.log(id);
+                window.location.href = "{{ route('VerwijderVraag', '') }}" + "/" + id;
+            } else if (result.isDenied) {
+            }
+        })
+    }
 </script>
 
 </html>
