@@ -24,27 +24,27 @@
         <div class="container-fluid pb-5">
             <div class="row">
                 <div class="col-12">
+                    {{-- Error handling meldingen --}}
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
+                    @if (Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                            @endforeach
+                        </div>
+                    @endif
                     @auth
                         @if (auth()->user()->hasRole('admin'))
                             <div class="col-12">
-                                {{-- Error handling meldingen --}}
-                                @if (Session::has('error'))
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ Session::get('error') }}
-                                    </div>
-                                @endif
-                                @if (Session::has('success'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ Session::get('success') }}
-                                    </div>
-                                @endif
-                                @if ($errors->any())
-                                    <div class="alert alert-danger" role="alert">
-                                        @foreach ($errors->all() as $error)
-                                            {{ $error }}
-                                        @endforeach
-                                    </div>
-                                @endif
                                 <div class="row">
                                     @php
                                         $collectionOfActiveGroups = [];
@@ -129,23 +129,6 @@
                         @elseif (auth()->user()->hasRole('student'))
                             @if (isset($groep[0]))
                                 <div class="col-12">
-                                    @if (Session::has('error'))
-                                        <div class="alert alert-danger m-4" role="alert">
-                                            {{ Session::get('error') }}
-                                        </div>
-                                    @endif
-                                    @if (Session::has('success'))
-                                        <div class="alert alert-success m-4" role="alert">
-                                            {{ Session::get('success') }}
-                                        </div>
-                                    @endif
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger m-4" role="alert">
-                                            @foreach ($errors->all() as $error)
-                                                {{ $error }}
-                                            @endforeach
-                                        </div>
-                                    @endif
                                     <div class="card shadow rounded-3 bg-body border-0 m-4">
                                         <div class="card-body">
                                             <h3>{{ $groep[0]->naam }}</h3>
@@ -304,30 +287,29 @@
                 </div>
             </div>
             <!-- Add this modal to your Blade template or layout file -->
-            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this question?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <form id="deleteForm" action="" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                Are you sure you want to delete this question?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="deleteForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
         @endsection
 </body>
