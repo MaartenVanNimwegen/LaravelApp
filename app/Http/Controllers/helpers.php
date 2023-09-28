@@ -33,6 +33,11 @@ function GetAllActiveVragen()
     return Vraag::where('status', 0)->get();
 }
 
+function GetAllOwnActiveVragen()
+{
+    return Vraag::where('status', 0)->where('userId', auth()->user()->id)->get();
+}
+
 function GetUsersNameById($id)
 {
     $user = User::where('id', $id)->get()->first();

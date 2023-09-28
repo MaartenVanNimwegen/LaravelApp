@@ -92,10 +92,10 @@
                                                                 </li>
                                                             @endforeach
                                                             <br>
-                                                            
-                                                                <button class="btn btn-danger" type="submit"
-                                                            onclick="Archiveergroep('<?php echo $group->id ?>', )">Archiveer</button>
-                                    
+
+                                                            <button class="btn btn-danger" type="submit"
+                                                                onclick="Archiveergroep('<?php echo $group->id; ?>', )">Archiveer</button>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -185,10 +185,39 @@
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
                                                         <button class="btn btn-danger" type="submit"
-                                                            onclick="Popup('<?php echo $vraag->id ?>', )">Verwijder</button>
+                                                            onclick="Popup('<?php echo $vraag->id; ?>', )">Verwijder</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div class="card shadow rounded-3 bg-body border-0 mt-3">
+                                <div class="card-body">
+                                    <h1 class="card-title">Door jou gestelde vragen:</h1>
+                                    @php
+                                        $vragen = GetAllOwnActiveVragen();
+                                    @endphp
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Vraag</th>
+                                        </thead>
+                                        <tbody>
+                                            @if (count($vragen) != 0)
+                                                @foreach ($vragen as $vraag)
+                                                    <tr>
+                                                        <td>{{ $vraag->vraag }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td>
+                                                        Je hebt zelf geen vragen gesteld.
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -281,29 +310,30 @@
                 </div>
             </div>
             <!-- Add this modal to your Blade template or layout file -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this question?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form id="deleteForm" action="" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete this question?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="deleteForm" action="" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
         @endsection
 </body>
@@ -338,8 +368,7 @@
             if (result.isConfirmed) {
                 console.log(id);
                 window.location.href = "{{ route('VerwijderVraag', '') }}" + "/" + id;
-            } else if (result.isDenied) {
-            }
+            } else if (result.isDenied) {}
         })
     }
 
@@ -354,8 +383,7 @@
             if (result.isConfirmed) {
                 console.log(id);
                 window.location.href = "{{ route('archiveerGroep', '') }}" + "/" + id;
-            } else if (result.isDenied) {
-            }
+            } else if (result.isDenied) {}
         })
     }
 </script>
