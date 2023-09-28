@@ -82,7 +82,9 @@ class LesController extends Controller
             ->where('lesId', $id)
             ->get();
 
-        if ($les->max <= count($records)){
+        $regirsteredUsers = Les_user_koppel::where('lesId', $id)->get();
+
+        if ($les->max <= count($regirsteredUsers)){
             return redirect()->back()->with('error', 'Deze les is al vol!');
         }
 

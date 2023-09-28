@@ -15,6 +15,11 @@
 <body>
     <div class="row justify-content-center mt-5">
         <div class="col-lg-4">
+            <center><h1 class="">Welkom op Scrumapp</h1>
+            
+            <p>Log hier in als docent of student</p>
+            </center>
+            <br>
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title">Log in</h1>

@@ -13,7 +13,16 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="home">ScrumApp</a>
+                <a class="navbar-brand" href="home">ScrumApp
+                    @auth
+
+                        @if (auth()->user()->hasRole('admin'))
+                        docentendashboard
+                        @elseif (auth()->user()->hasRole('student'))
+                        studentendashboard
+                        @endif
+                    @endauth
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
