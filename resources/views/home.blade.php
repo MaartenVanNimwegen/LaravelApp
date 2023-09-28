@@ -92,12 +92,10 @@
                                                                 </li>
                                                             @endforeach
                                                             <br>
-                                                            <form action="{{ route('archiveerGroep', ['id' => $group->id]) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button class="btn btn-primary"
-                                                                    type="submit">Archiveer</button>
-                                                            </form>
+                                                            
+                                                                <button class="btn btn-danger" type="submit"
+                                                            onclick="Archiveergroep('<?php echo $group->id ?>', )">Archiveer</button>
+                                    
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,7 +185,7 @@
                                                     <td>{{ GetUsersNameById($vraag->userId) }}</td>
                                                     <td>
                                                         <button class="btn btn-danger" type="submit"
-                                                            onclick="Popup('<?php echo $vraag->id ?>')">Delete</button>
+                                                            onclick="Popup('<?php echo $vraag->id ?>', )">Verwijder</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -340,6 +338,22 @@
             if (result.isConfirmed) {
                 console.log(id);
                 window.location.href = "{{ route('VerwijderVraag', '') }}" + "/" + id;
+            } else if (result.isDenied) {
+            }
+        })
+    }
+
+    function Archiveergroep(id) {
+        Swal.fire({
+            title: 'Weet je zeker dat je deze groep wil archiveren?',
+            showDenyButton: true,
+            confirmButtonText: 'Ja',
+            denyButtonText: `Nee`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                console.log(id);
+                window.location.href = "{{ route('archiveerGroep', '') }}" + "/" + id;
             } else if (result.isDenied) {
             }
         })
