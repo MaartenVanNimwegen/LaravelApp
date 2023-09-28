@@ -64,11 +64,11 @@
                                     @endforeach
                                     {{-- Checkboxes --}}
                                     <div class="content">
-                                        <label for="showActive">Toon active groepen:</label>
                                         <input type="checkbox" id="showActive" class="checkbox" checked>
-
-                                        <label for="showArchived">Toon gearchiveerde groepen:</label>
+                                        <label for="showActive">Toon active groepen</label>
+                                        <br>
                                         <input type="checkbox" id="showArchived" class="checkbox">
+                                        <label for="showArchived">Toon gearchiveerde groepen</label>
                                     </div>
 
                                     <div id="active" class="content">
