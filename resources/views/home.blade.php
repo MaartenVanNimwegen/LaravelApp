@@ -64,11 +64,11 @@
                                     @endforeach
                                     {{-- Checkboxes --}}
                                     <div class="content">
-                                        <label for="showActive">Toon active groepen:</label>
                                         <input type="checkbox" id="showActive" class="checkbox" checked>
-
-                                        <label for="showArchived">Toon gearchiveerde groepen:</label>
+                                        <label for="showActive">Toon active groepen</label>
+                                        <br>
                                         <input type="checkbox" id="showArchived" class="checkbox">
+                                        <label for="showArchived">Toon gearchiveerde groepen</label>
                                     </div>
 
                                     <div id="active" class="content">
@@ -191,6 +191,35 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div class="card shadow rounded-3 bg-body border-0 mt-3">
+                                <div class="card-body">
+                                    <h1 class="card-title">Door jou gestelde vragen:</h1>
+                                    @php
+                                        $vragen = GetAllOwnActiveVragen();
+                                    @endphp
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Vraag</th>
+                                        </thead>
+                                        <tbody>
+                                            @if (count($vragen) != 0)
+                                                @foreach ($vragen as $vraag)
+                                                    <tr>
+                                                        <td>{{ $vraag->vraag }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td>
+                                                        Je hebt zelf geen vragen gesteld.
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
