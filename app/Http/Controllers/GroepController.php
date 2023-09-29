@@ -79,7 +79,7 @@ class GroepController extends Controller
         }
 
         // Redirect to a success page or return a response as needed
-        return redirect()->route('home')->with('success', 'Groep aangemaakt');
+        return redirect()->back()->with('success', 'Groep aangemaakt');
 
     }
 
