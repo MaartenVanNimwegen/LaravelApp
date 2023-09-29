@@ -94,7 +94,7 @@ class LesController extends Controller
             $les_user_koppel->lesId = $id;
             $les_user_koppel->save();
 
-            return redirect()->route('home');
+            return redirect()->route('home')->with('success', 'Je bent aangemeld!');
         }
 
         return redirect()->route('home')->with('error', 'Je bent al aangemeld voor deze les!');
