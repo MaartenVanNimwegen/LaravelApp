@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use app\Http\Middleware\AdminMiddleware;
 use App\Mail\RegisterMail;
 use App\Models\User;
-use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Routing\MiddlewareNameResolver;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -113,11 +108,6 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect()->route('login');
-    }
-
-    public function wachtwoord()
-    {
-        return view('wachtwoord');
     }
 
     public function sendEmail($user)

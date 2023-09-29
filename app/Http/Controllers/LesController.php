@@ -69,7 +69,7 @@ class LesController extends Controller
         return $upcomingLessons;
     }
 
-    public function Aanmelden(Request $request, $id)
+    public function Aanmelden($id)
     {
         $les = Les::find($id);
         if (!$les) {
@@ -84,7 +84,7 @@ class LesController extends Controller
 
         $regirsteredUsers = Les_user_koppel::where('lesId', $id)->get();
 
-        if ($les->max <= count($regirsteredUsers)){
+        if ($les->max <= count($regirsteredUsers)) {
             return redirect()->back()->with('error', 'Deze les is al vol!');
         }
 

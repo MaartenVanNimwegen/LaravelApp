@@ -6,26 +6,17 @@ use App\Models\User;
 use App\Models\Groep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 
 class GroepController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $Groups = Groep::with('users')->get();
         return $Groups;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-
-        // Get all users who are not part of any archived group
         $availableUsers = User::whereNotIn('id', function ($query) {
             $query->select('users.id')
                 ->from('users')
@@ -34,22 +25,18 @@ class GroepController extends Controller
                 ->whereColumn('groep_user_koppel.userId', 'users.id')
                 ->where('groep.status', 0);
         })
-            ->where('role', '!=', 'admin') // Exclude users with 'admin' role
+            ->where('role', '!=', 'admin')
             ->whereNull('password_code')
             ->get();
 
         return view('createGroup', compact('availableUsers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'naam' => 'required|string|max:75',
             'user_ids' => 'array|required|min:1',
-            // Make sure user_ids is an array
         ], [
             'max' => 'Je gekozen naam is te lang!',
             'string' => 'De waarde moet van het type tekst zijn!',
@@ -65,90 +52,49 @@ class GroepController extends Controller
         $validatedData = $request->validate([
             'naam' => 'required|string|max:75',
             'user_ids' => 'array|required|min:1',
-            // Make sure user_ids is an array
         ]);
 
-        // Create a new group with a status of 0
         $groep = new Groep;
         $groep->naam = $validatedData['naam'];
-        $groep->status = 0; // Set the status to 0
+        $groep->status = 0;
         $groep->save();
-        // Attach selected users to the group
+
         if (isset($validatedData['user_ids'])) {
             $groep->users()->attach($validatedData['user_ids']);
         }
 
-        // Redirect to a success page or return a response as needed
-        return redirect()->back()->with('success', 'Groep aangemaakt');
+        return redirect()->back()->with('success', 'Groep aangemaakt!');
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($userId)
     {
-        // Retrieve the user by their ID
         $user = User::findOrFail($userId);
-
-        // Retrieve the groups associated with the user
-        $userGroups = $user->groups;
-
-        // You can further process and display the user's groups as needed
-        return $userGroups;
+        return $user->groups;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Groep $groep)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $id, Groep $groep)
-    {
-
-        $groep = Groep::findOrFail($id);
-        $groep->fill(['status' => '1']);
-
-        return redirect()->route('home')->with('success', 'Group gearchiveerd');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Groep $groep)
-    {
-        //
-    }
     public function ArchiveerGroep($id)
     {
         $groep = Groep::findOrFail($id);
         $groep->update(['status' => '1']);
 
-        return redirect()->route('home')->with('success', 'Groep gearchiveerd');
+        return redirect()->route('home')->with('success', 'Groep gearchiveerd!');
     }
 
-    public function aanwezig(Groep $groep)
+    public function aanwezig()
     {
-        $userId = auth()->user()->id;
+        $user = User::find(auth()->user()->id);
 
-        $user = User::find($userId);
+        if ($user) {
+            if ($user->aanwezig === 1) {
+                return redirect()->route('home')->with('success', 'Je bent al aanwezig gemeld!');
+            }
 
-        if (!$user) {
-            return redirect()->back()->with('error', 'Item not found');
+            $user->aanwezig = 1;
+            $user->save();
+
+            return redirect()->route('home')->with('success', 'Je bent nu aanwezig gemeld!');
         }
-
-        // Update the item record with the new data
-        $user->aanwezig = 1;
-        // Update other fields as needed
-
-        $user->save();
-
-        return redirect()->route('home')->with('success', 'Je bent aangemeld');
+        return redirect()->back()->with('error', 'Er is een fout opgetreden!');
     }
 }

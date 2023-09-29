@@ -30,7 +30,7 @@ class VraagController extends Controller
         $vraag->userId = auth()->user()->id;
 
         $vraag->save();
-        return back()->with('success', 'Je vraag is gesteld!');
+        return back()->with('success', 'Je vraag is gesteld en is terug te zien onder "Door jou gestelde vragen".');
     }
 
     public function VerwijderVraag($id)
@@ -38,19 +38,9 @@ class VraagController extends Controller
         $vraag = Vraag::find($id);
         if ($vraag) {
             $vraag->delete();
-            return redirect()->back()->with('success', 'De vraag is verwijderd.');
+            return redirect()->back()->with('success', 'De vraag is verwijderd!');
         } else {
             return redirect()->back()->with('error', 'Er is een fout opgetreden!');
         }
-    }
-
-    public function delete(Vraag $question)
-    {
-            // Add your code to delete the question here
-    $question->delete();
-
-    // Redirect to a relevant page (e.g., the question index page)
-    return redirect()->route('home')->with('success', 'Vraag succesvol verwijderd');
-
     }
 }
