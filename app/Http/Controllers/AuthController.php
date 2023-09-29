@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use app\Http\Middleware\AdminMiddleware;
+use App\Mail\RegisterMail;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Routing\MiddlewareNameResolver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -57,9 +60,12 @@ class AuthController extends Controller
         $user->klas = $request->klas;
         $user->password_code = uuid_create();
 
-        $user->save();
-
-        return back()->with('success', 'Registratie succesvol');
+        $result = $this->sendEmail($user);
+        if ($result) {
+            $user->save();
+            return redirect()->back()->with('success', 'De grbruiker is succesvol aangemaakt en heeft een mail ontvangen!');
+        }
+        return redirect()->back()->with('error', 'Er is geen gebruiker aangemaakt omdat er een fout optrad bij het versturen van de registratiemail!');
     }
 
     public function login()
@@ -112,5 +118,17 @@ class AuthController extends Controller
     public function wachtwoord()
     {
         return view('wachtwoord');
+    }
+
+    public function sendEmail($user)
+    {
+        try {
+            Mail::to($user->email)
+                ->send(new RegisterMail($user));
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Er is een fout opgetreden bij het versturen van de registratie mail: ' . $e->getMessage());
+            return false;
+        }
     }
 }

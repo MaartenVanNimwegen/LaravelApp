@@ -38,6 +38,8 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::post('/addGroup', [GroepController::class, 'store'])->name('storeGroup');
     Route::get('/VerwijderVraag/{id}', [VraagController::class, 'VerwijderVraag'])->name('VerwijderVraag');
     Route::get('/archiveerGroep/{id}', [GroepController::class, 'ArchiveerGroep'])->name('archiveerGroep');
+    Route::get('/sendRegisterMail', 'AuthController@sendEmail');
+
 });
 
 Route::group(['middleware' => StudentMiddleware::class], function () {
