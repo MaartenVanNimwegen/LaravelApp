@@ -15,9 +15,9 @@
 <body>
     <div class="row justify-content-center mt-5">
         <div class="col-lg-4">
-            <center><h1 class="">Welkom op Scrumapp</h1>
-            
-            <p>Log hier in als docent of student</p>
+            <center>
+                <h1 class="">Welkom op Scrumapp</h1>
+                <p>Log hier in als docent of student</p>
             </center>
             <br>
             <div class="card">
@@ -26,17 +26,17 @@
                 </div>
                 <div class="card-body">
                     @if (Session::has('error'))
-                        <div class="alert alert-danger m-4" role="alert">
+                        <div class="alert alert-danger" role="alert">
                             {{ Session::get('error') }}
                         </div>
                     @endif
                     @if (Session::has('success'))
-                        <div class="alert alert-success m-4" role="alert">
+                        <div class="alert alert-success" role="alert">
                             {{ Session::get('success') }}
                         </div>
                     @endif
                     @if ($errors->any())
-                        <div class="alert alert-danger m-4" role="alert">
+                        <div class="alert alert-danger" role="alert">
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
                             @endforeach
