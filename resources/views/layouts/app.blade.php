@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
-    <title>ScrumApp</title>
+    <title>DiplomaSucces</title>
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="home">ScrumApp
+                <a class="navbar-brand" href="home">DiplomaSucces
                     @auth
 
                         @if (auth()->user()->hasRole('admin'))
@@ -49,11 +49,11 @@
                             @endif
                         @endauth
                     </ul>
-                    <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
+                    {{-- <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit">Log uit</button>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
         </nav>
