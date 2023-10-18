@@ -23,7 +23,7 @@ class RegisterMail extends Mailable
 
     public function build()
     {
-        return $this->from('noreply@scrumapp.nl', 'noreply')
+        return $this->from('noreply@diplomasucces.nl', 'noreply')
             ->subject('Voltooi uw registratie')
             ->view('emails.registermail');
     }
